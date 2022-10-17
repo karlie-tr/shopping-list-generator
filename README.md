@@ -10,8 +10,8 @@ and working professional who would like to eat healthier.
 
 ---
 ## User Stories
-- As a user, I want to *add a recipe* (includes the ingredients and the cook time) to the
+- As a user, I want to *add a meal* (includes the ingredients and the cook time) to the
 current meal plan
 - As a user, I want to *add a produce* to the grocery list
-- As a user, I want to *estimate the cooking time* of each meal
-- As a user, I want to *see the meals and snack* for the day
+- As a user, I want to *estimate the cooking time* of the whole meal plan
+- As a user, I want to *see all the meals* that were added

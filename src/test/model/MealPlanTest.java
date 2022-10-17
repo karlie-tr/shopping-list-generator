@@ -11,13 +11,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class MealPlanTest {
 
     private final List<String> overnightOatIngredientList = new ArrayList<>();
-    private final List<String> salmonBowlIngredientList = new ArrayList<>();
     private final List<String> chickenBowlIngredientList = new ArrayList<>();
     private final List<String> bagelAndCreamCheeseIngredientList = new ArrayList<>();
-    private final MealPlan mp = new MealPlan();
+    private final MealPlan mp1 = new MealPlan();
+    private final MealPlan mp2 = new MealPlan();
+    private final MealPlan mp3 = new MealPlan();
 
     private Meal oats;
-    private Meal salmonBowl;
     private Meal chickenBowl;
     private Meal bagel;
 
@@ -26,26 +26,13 @@ public class MealPlanTest {
     @BeforeEach
     public void setUp() {
         overnightOatIngredientList.add("oat");
-        overnightOatIngredientList.add("granola");
         overnightOatIngredientList.add("milk");
-        overnightOatIngredientList.add("yogurt");
         overnightOatIngredientList.add("strawberries");
-        overnightOatIngredientList.add("blueberries");
         overnightOatIngredientList.add("mango");
         oats = new Meal("overnight oats",overnightOatIngredientList,10);
 
-        salmonBowlIngredientList.add("rice");
-        salmonBowlIngredientList.add("salmon");
-        salmonBowlIngredientList.add("cucumber");
-        salmonBowlIngredientList.add("kale");
-        salmonBowlIngredientList.add("avocado");
-        chickenBowlIngredientList.add("mango");
-        salmonBowl = new Meal("salmon bowl",salmonBowlIngredientList,20);
-
         chickenBowlIngredientList.add("rice");
         chickenBowlIngredientList.add("chicken");
-        chickenBowlIngredientList.add("cucumber");
-        chickenBowlIngredientList.add("kale");
         chickenBowlIngredientList.add("avocado");
         chickenBowl = new Meal("chicken bowl",chickenBowlIngredientList,20);
 
@@ -53,39 +40,75 @@ public class MealPlanTest {
         bagelAndCreamCheeseIngredientList.add("herb and garlic cream cheese");
         bagel = new Meal("bagel and cream cheese",bagelAndCreamCheeseIngredientList,5);
 
-        mp.addNewMeal(bagel);
     }
 
     @Test
     public void addTwoDifferentRecipesTest() {
-        MealPlan mp1 = mp;
         mp1.addNewMeal(oats);
         mp1.addNewMeal(chickenBowl);
 
         List<String> mealNames1 = new ArrayList<>();
-        mealNames1.add(bagel.getMealName());
         mealNames1.add(oats.getMealName());
         mealNames1.add(chickenBowl.getMealName());
 
-        assertEquals(3,mp1.getNumberOfMeals());
+        assertEquals(2,mp1.getNumberOfMeals());
         assertEquals(mealNames1,mp1.getNamesOfCurrentMeals());
-        assertEquals(35,mp1.getTotalCookingTime());
+        assertEquals(30,mp1.getTotalCookingTime());
+
+        List<String> grocery1 = new ArrayList<>();
+        grocery1.add("oat");
+        grocery1.add("milk");
+        grocery1.add("strawberries");
+        grocery1.add("mango");
+        grocery1.add("rice");
+        grocery1.add("chicken");
+        grocery1.add("avocado");
+
+        assertEquals(grocery1,mp1.getGroceryList());
     }
 
     @Test
-    public void addDuplicateRecipeTest() {
-        MealPlan mp2 = mp;
+    public void addADuplicateRecipeTest() {
         mp2.addNewMeal(bagel);
-        mp2.addNewMeal(salmonBowl);
+        mp2.addNewMeal(bagel);
 
         List<String> mealNames2 = new ArrayList<>();
         mealNames2.add(bagel.getMealName());
         mealNames2.add(bagel.getMealName());
-        mealNames2.add(salmonBowl.getMealName());
 
-        assertEquals(3,mp2.getNumberOfMeals());
+        assertEquals(2,mp2.getNumberOfMeals());
         assertEquals(mealNames2,mp2.getNamesOfCurrentMeals());
-        assertEquals(30,mp2.getTotalCookingTime());
+        assertEquals(10,mp2.getTotalCookingTime());
+        
+        List<String> grocery2 = new ArrayList<>();
+        grocery2.add("everything bagel");
+        grocery2.add("herb and garlic cream cheese");
+
+        assertEquals(grocery2,mp2.getGroceryList());
+    }
+
+    @Test
+    public void removeMultipleRecipesTest() {
+        mp3.addNewMeal(bagel);
+        mp3.addNewMeal(chickenBowl);
+        mp3.addNewMeal(oats);
+        mp3.removeExistingMeal(bagel);
+        mp3.removeExistingMeal(oats);
+
+        List<String> mealNames3 = new ArrayList<>();
+        mealNames3.add(chickenBowl.getMealName());
+
+        assertEquals(1,mp3.getNumberOfMeals());
+        assertEquals(mealNames3,mp3.getNamesOfCurrentMeals());
+        assertEquals(20,mp3.getTotalCookingTime());
+
+        List<String> grocery3 = new ArrayList<>();
+        grocery3.add("rice");
+        grocery3.add("chicken");
+        grocery3.add("avocado");
+
+        assertEquals(grocery3,mp3.getGroceryList());
+
     }
 
 }

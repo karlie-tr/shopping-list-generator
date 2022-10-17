@@ -5,26 +5,53 @@ import java.util.List;
 
 public class MealPlan {
 
-    private List<Meal> meals;
-    private Integer totalCookingTime;
-    private Integer numberOfMeals;
-    private List<String> mealsNames;
+    private List<Meal> mealPlan;             // A list of meals
+    private Integer totalCookingTime;        // The sum of all individual meal's cookingTime
+    private Integer numberOfMeals;           // The number of meals in the meal plan
+    private List<String> mealsNames;         // Names of all meals in meal plan
+    private List<String> toBuyList;          // The grocery list of all the items
 
     public MealPlan() {
         this.totalCookingTime = 0;
-        this.meals = new ArrayList<>();
+        this.mealPlan = new ArrayList<>();
         this.numberOfMeals = 0;
         this.mealsNames = new ArrayList<>();
+        this.toBuyList = new ArrayList<>();
     }
 
+    // MODIFIES: mealPlan
     // EFFECTS : add a meal for the meal plan, including its name and cooking time
     public void addNewMeal(Meal m) {
-        meals.add(m);
+        List<String> ingredientsNeeded = m.getIngredients();
+        mealPlan.add(m);
         mealsNames.add(m.getMealName());
         totalCookingTime += m.getCookingTime();
         numberOfMeals++;
 
+        for (String ingredient : ingredientsNeeded) {
+            if (!(toBuyList.contains(ingredient))) {
+                toBuyList.add(ingredient);
+            }
+        }
     }
+
+    // REQUIRES: mealPlan != empty; m is in mealPlan
+    // MODIFIES: mealPlan
+    // EFFECTS : remove a meal from the meal plan, including its name and cooking time
+    public void removeExistingMeal(Meal m) {
+        List<String> ingredientsNeeded = m.getIngredients();
+        mealPlan.remove(m);
+        mealsNames.remove(m.getMealName());
+        totalCookingTime -= m.getCookingTime();
+        numberOfMeals--;
+
+        for (String ingredient : ingredientsNeeded) {
+            if (toBuyList.contains(ingredient)) {
+                toBuyList.remove(ingredient);
+            }
+        }
+    }
+
 
     // getters
     public int getNumberOfMeals() {
@@ -42,7 +69,8 @@ public class MealPlan {
     }
 
     // getters
-    public List<Meal> getCurrentMeals() {
-        return meals;
+    public List<String> getGroceryList() {
+        return toBuyList;
     }
+
 }
