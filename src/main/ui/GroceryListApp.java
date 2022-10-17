@@ -42,6 +42,7 @@ public class GroceryListApp {
         System.out.println("\n Select from: ");
         System.out.println("\t view -> view current meal plan");
         System.out.println("\t add -> add a meal to current meal plan");
+        System.out.println("\t remove -> remove a meal from the current meal plan");
         System.out.println("\t time -> the amount of time needed to finishing cooking the meal plan");
         System.out.println("\t grocery list -> view the current grocery list");
         System.out.println("\t return -> return to the available options");
@@ -57,6 +58,7 @@ public class GroceryListApp {
         final String QUIT_COMMAND = "exit";
         final String LIST_COMMAND = "grocery list";
         final String TIME_COMMAND = "time";
+        final String REMOVE_COMMAND = "remove";
 
         if (str.length() > 0) {
             switch (str) {
@@ -79,10 +81,35 @@ public class GroceryListApp {
                 case LIST_COMMAND:
                     printShoppingList();
                     break;
+                case REMOVE_COMMAND:
+                    removeMeals();
+                    break;
                 default:
                     System.out.println("Invalid command, please try again.");
                     break;
             }
+        }
+    }
+
+    private void removeMeals() {
+        Scanner scan = new Scanner(System.in);
+        String mealName;
+
+        if (mp.getMeals().size() > 0) {
+            printMealPlan();
+            System.out.println("Which meal would you like to remove?");
+            mealName = scan.nextLine();
+
+            for (Meal meal : mp.getMeals()) {
+                if (mealName.equalsIgnoreCase(meal.getMealName())) {
+                    mp.removeExistingMeal(meal);
+                    System.out.println("Successfully removed the meal!");
+                } else {
+                    System.out.println("This meal does not exist in our meal plan. Please choose another meal.");
+                }
+            }
+        } else {
+            System.out.println("No Meal Plan has been created yet. Please try again.");
         }
     }
 
@@ -127,6 +154,9 @@ public class GroceryListApp {
         System.out.println("What is the name is of the meal?");
         mealName = scan.nextLine();
 
+        System.out.println("How long does it take to cook this meal?");
+        cookingTime = Integer.parseInt(scan.nextLine());
+
         System.out.println("How many ingredients are there?");
         numOfIngredients = Integer.parseInt(scan.nextLine());
 
@@ -135,15 +165,14 @@ public class GroceryListApp {
             ingredients.add(scan.nextLine());
         }
 
-        System.out.println("How long does it take to cook this meal?");
-        cookingTime = Integer.parseInt(scan.nextLine());
-
         Meal m = new Meal(mealName, ingredients, cookingTime);
+
         mp.addNewMeal(m);
+        System.out.println("Successfully added the meal!");
     }
 
     // EFFECTS: print names of meals in the current meal plan;
-    //          print an error message and display options if no meal plan is created
+    //          print an error message if no meal plan is created
     private void printMealPlan() {
         if (mp.getNamesOfCurrentMeals().size() > 0) {
             System.out.println("The current meals in this meal plan are: ");
@@ -152,7 +181,6 @@ public class GroceryListApp {
             }
         } else {
             System.out.println("No Meal Plan has been created yet. Please try again.");
-            printOptions();
         }
     }
 }
