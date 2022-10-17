@@ -91,6 +91,9 @@ public class GroceryListApp {
         }
     }
 
+    // EFFECTS: remove an existing meal in mealPlan;
+    //          print an error message if no meal plan is created;
+    //          print an error message if meal is not in the current meal plan.
     private void removeMeals() {
         Scanner scan = new Scanner(System.in);
         String mealName;
@@ -142,7 +145,7 @@ public class GroceryListApp {
     // REQUIRES: numOfIngredients > 0; cookingTime > 0
     // MODIFIES: MealPlan
     // EFFECTS: create a Meal based on user's input;
-    //          add the created meal to the Meal Plan
+    //          add the created meal to the Meal Plan.
     private void addMeals() {
         Scanner scan = new Scanner(System.in);
 
