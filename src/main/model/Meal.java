@@ -4,6 +4,7 @@ import java.util.List;
 
 // Represents a meal that includes the name, the needed ingredients,
 // and cooking time
+
 public class Meal {
 
     private final String mealName;                       // the name of the meal
