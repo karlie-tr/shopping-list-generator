@@ -108,7 +108,6 @@ public class MealPlanTest {
         grocery3.add("avocado");
 
         assertEquals(grocery3,mp3.getGroceryList());
-
     }
 
 }

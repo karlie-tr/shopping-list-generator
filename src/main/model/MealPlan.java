@@ -5,7 +5,6 @@ import java.util.List;
 
 public class MealPlan {
 
-    private List<Meal> mealPlan;             // A list of meals
     private Integer totalCookingTime;        // The sum of all individual meal's cookingTime
     private Integer numberOfMeals;           // The number of meals in the meal plan
     private List<String> mealsNames;         // Names of all meals in meal plan
@@ -13,7 +12,6 @@ public class MealPlan {
 
     public MealPlan() {
         this.totalCookingTime = 0;
-        this.mealPlan = new ArrayList<>();
         this.numberOfMeals = 0;
         this.mealsNames = new ArrayList<>();
         this.toBuyList = new ArrayList<>();
@@ -23,7 +21,6 @@ public class MealPlan {
     // EFFECTS : add a meal for the meal plan, including its name and cooking time
     public void addNewMeal(Meal m) {
         List<String> ingredientsNeeded = m.getIngredients();
-        mealPlan.add(m);
         mealsNames.add(m.getMealName());
         totalCookingTime += m.getCookingTime();
         numberOfMeals++;
@@ -40,18 +37,14 @@ public class MealPlan {
     // EFFECTS : remove a meal from the meal plan, including its name and cooking time
     public void removeExistingMeal(Meal m) {
         List<String> ingredientsNeeded = m.getIngredients();
-        mealPlan.remove(m);
         mealsNames.remove(m.getMealName());
         totalCookingTime -= m.getCookingTime();
         numberOfMeals--;
 
         for (String ingredient : ingredientsNeeded) {
-            if (toBuyList.contains(ingredient)) {
-                toBuyList.remove(ingredient);
-            }
+            toBuyList.remove(ingredient);
         }
     }
-
 
     // getters
     public int getNumberOfMeals() {
