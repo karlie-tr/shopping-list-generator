@@ -15,3 +15,6 @@ current meal plan
 - As a user, I want to *view the list of groceries* for the specific meal plan
 - As a user, I want to *estimate the cooking time* of the whole meal plan
 - As a user, I want to *see all the meals* that were added
+- As a user, I want to *save the current meal plan*
+- As a user, I want to *load the previously saved meal plan*
+
