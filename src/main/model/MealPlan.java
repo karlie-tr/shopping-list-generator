@@ -1,16 +1,19 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 import java.util.List;
 
 // Represent a meal plan consists of a list of meals, total cooking time, the number of meals and the list of meals'
 // names and a grocery list
 
-public class MealPlan {
+public class MealPlan implements Writable {
 
-    private List<Meal> meals;                // the meals in the meal plan
-    private List<String> mealsNames;         // Names of all meals in meal plan
-    private List<String> toBuyList;          // The grocery list of all the items
+    private final List<Meal> meals;                // the meals in the meal plan
+    private final List<String> mealsNames;         // Names of all meals in meal plan
+    private final List<String> toBuyList;          // The grocery list of all the items
     private Integer totalCookingTime;        // The sum of all individual meal's cookingTime
     private Integer numberOfMeals;           // The number of meals in the meal plan
 
@@ -31,11 +34,7 @@ public class MealPlan {
         mealsNames.add(m.getMealName());
         totalCookingTime += m.getCookingTime();
         numberOfMeals++;
-        for (String ingredient : ingredientsNeeded) {
-            if (!(toBuyList.contains(ingredient))) {
-                toBuyList.add(ingredient);
-            }
-        }
+        toBuyList.addAll(ingredientsNeeded);
     }
 
     // REQUIRES: mealPlan != empty; m is in mealPlan
@@ -44,12 +43,14 @@ public class MealPlan {
     public void removeExistingMeal(Meal m) {
         List<String> ingredientsNeeded = m.getIngredients();
 
+        meals.remove(m);
         mealsNames.remove(m.getMealName());
         totalCookingTime -= m.getCookingTime();
         numberOfMeals--;
         for (String ingredient : ingredientsNeeded) {
-            toBuyList.remove(ingredient);
-            meals.remove(m);
+            if (!(toBuyList.contains(ingredient))) {
+                toBuyList.remove(ingredient);
+            }
         }
     }
 
@@ -76,6 +77,11 @@ public class MealPlan {
     // getters
     public List<Meal> getMeals() {
         return meals;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        return null;
     }
 
 }

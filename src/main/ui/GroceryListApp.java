@@ -4,21 +4,27 @@ package ui;
 
 import model.Meal;
 import model.MealPlan;
+import persistence.JsonReader;
+import persistence.JsonSaver;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.io.FileNotFoundException;
+import java.util.*;
 
 public class GroceryListApp {
 
+    private static final String JSON_STORE =  "./data/MealPlan.json";
     private final Scanner input;
     private final MealPlan mp;
     private boolean runProgram;
+    private JsonSaver jsonSaver;
+    private JsonReader jsonReader;
 
-    public GroceryListApp() {
+    public GroceryListApp() throws FileNotFoundException {
         input = new Scanner(System.in);
         runProgram = true;
         mp = new MealPlan();
+        jsonSaver = new JsonSaver(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
 
         runGroceryListApp();
     }
@@ -26,7 +32,7 @@ public class GroceryListApp {
     // EFFECTS: set up the console application
     private void runGroceryListApp() {
         System.out.println("Hello, please select from the options listed below :).");
-        printOptions();
+        printMainOptions();
         String str;
 
         while (runProgram) {
@@ -37,15 +43,25 @@ public class GroceryListApp {
         }
     }
 
-    // EFFECTS: print out the application's function
-    private void printOptions() {
+    // EFFECTS: print the application's function
+    private void printMainOptions() {
+        System.out.println("\n Select from: ");
+        System.out.println("\t new -> add new meal plan");
+        System.out.println("\t load -> load previous meal plan");
+        System.out.println("\t view -> view current meal plan");
+        System.out.println("\t save -> save current meal plan");
+        System.out.println("\t exit -> quit");
+    }
+
+    // EFFECTS: print out the options related to meal plan
+    private void printMealPlanOptions() {
         System.out.println("\n Select from: ");
         System.out.println("\t view -> view current meal plan");
         System.out.println("\t add -> add a meal to current meal plan");
         System.out.println("\t remove -> remove a meal from the current meal plan");
         System.out.println("\t time -> the amount of time needed to finishing cooking the meal plan");
         System.out.println("\t grocery list -> view the current grocery list");
-        System.out.println("\t return -> return to the available options");
+        System.out.println("\t return -> return to the main options");
         System.out.println("\t exit -> quit");
     }
 
@@ -53,41 +69,81 @@ public class GroceryListApp {
     @SuppressWarnings("methodlength")
     private void parseInput(String str) {
         final String VIEW_MEAL_PLAN_COMMAND = "view";
+        final String NEW_MEAL_PLAN_COMMAND = "new";
         final String ADD_MEAL_COMMAND = "add";
         final String BACK_COMMAND = "return";
         final String QUIT_COMMAND = "exit";
         final String LIST_COMMAND = "grocery list";
         final String TIME_COMMAND = "time";
         final String REMOVE_COMMAND = "remove";
+        final String SAVE_COMMAND = "save";
+        final String LOAD_COMMAND = "load";
 
         if (str.length() > 0) {
             switch (str) {
+                case NEW_MEAL_PLAN_COMMAND:
+                    printMealPlanOptions();
+                    break;
                 case VIEW_MEAL_PLAN_COMMAND:
                     printMealPlan();
                     break;
-                case ADD_MEAL_COMMAND:
-                    addMeals();
-                    break;
                 case BACK_COMMAND:
-                    printOptions();
+                    printMainOptions();
                     break;
                 case QUIT_COMMAND:
                     System.out.println("Quiting Application....");
                     runProgram = false;
                     break;
+                case SAVE_COMMAND:
+                    saveMealPlan();
+                    break;
+                case LOAD_COMMAND:
+                    loadMealPlan();
+                    break;
                 case TIME_COMMAND:
                     printTotalTime();
                     break;
                 case LIST_COMMAND:
-                    printShoppingList();
+                    printGroceryList();
                     break;
                 case REMOVE_COMMAND:
                     removeMeals();
+                    break;
+                case ADD_MEAL_COMMAND:
+                    addMeals();
                     break;
                 default:
                     System.out.println("Invalid command, please try again.");
                     break;
             }
+        }
+    }
+
+    // EFFECTS: print out no meal plan available message
+    private void printNoMealPlan() {
+        System.out.println("No Meal Plan has been created yet. Please try again.");
+
+    }
+
+    // EFFECTS: load a previously saved meal plan from file
+    private void loadMealPlan() {
+    }
+
+    // EFFECTS: save current Meal Plan to file
+    private void saveMealPlan() {
+        Scanner scan = new Scanner(System.in);
+        String planName;
+
+        System.out.println("Please Enter Meal Plan's Name");
+        planName = scan.nextLine();
+
+        try {
+            jsonSaver.open();
+            jsonSaver.write(mp);
+            jsonSaver.close();
+            System.out.println("Saved " + planName + " to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
         }
     }
 
@@ -97,36 +153,47 @@ public class GroceryListApp {
     private void removeMeals() {
         Scanner scan = new Scanner(System.in);
         String mealName;
+        List<String> mealNames = mp.getNamesOfCurrentMeals();
+        List<Meal> meals = mp.getMeals();
 
-        if (mp.getMeals().size() > 0) {
+        if (mp.getNumberOfMeals() < 0) {
+            printNoMealPlan();
+        } else {
             printMealPlan();
             System.out.println("Which meal would you like to remove?");
             mealName = scan.nextLine();
 
-            for (Meal meal : mp.getMeals()) {
-                if (mealName.equalsIgnoreCase(meal.getMealName())) {
+            for (Meal meal : meals) {
+                if (mealNames.contains(mealName)) {
                     mp.removeExistingMeal(meal);
                     System.out.println("Successfully removed the meal!");
                 } else {
                     System.out.println("This meal does not exist in our meal plan. Please choose another meal.");
                 }
             }
-        } else {
-            System.out.println("No Meal Plan has been created yet. Please try again.");
         }
     }
 
     // EFFECTS: print shopping list based on the meal plan created;
     //          print an error message and display options if no meal plan is created
-    private void printShoppingList() {
-        if (mp.getNamesOfCurrentMeals().size() > 0) {
+    private void printGroceryList() {
+        List<String> toBuyList = mp.getGroceryList();
+
+        if (mp.getNumberOfMeals() > 0) {
             System.out.println("This meal plan's grocery list: ");
-            for (String item : mp.getGroceryList()) {
-                System.out.println("\t" + item);
-            }
+            printIngredientNameAndQuantity(toBuyList);
         } else {
-            System.out.println("No Meal Plan has been created yet. Please try again.");
-            printOptions();
+            printNoMealPlan();
+            printMealPlanOptions();
+        }
+    }
+
+    // EFFECTS: print groceryList with the quantity of ingredients
+    private void printIngredientNameAndQuantity(List<String> toBuyList) {
+        Set<String> ingredientNames = new HashSet<>(toBuyList);
+
+        for (String i: ingredientNames) {
+            System.out.println("\t" + i + ": " + Collections.frequency(toBuyList, i));
         }
     }
 
@@ -138,7 +205,7 @@ public class GroceryListApp {
                     + mp.getTotalCookingTime() + " minutes");
         } else {
             System.out.println("No Meal Plan has been created yet. Please try again.");
-            printOptions();
+            printMealPlanOptions();
         }
     }
 
@@ -177,13 +244,13 @@ public class GroceryListApp {
     // EFFECTS: print names of meals in the current meal plan;
     //          print an error message if no meal plan is created
     private void printMealPlan() {
-        if (mp.getNamesOfCurrentMeals().size() > 0) {
+        if (mp.getNumberOfMeals() > 0) {
             System.out.println("The current meals in this meal plan are: ");
             for (String name : mp.getNamesOfCurrentMeals()) {
                 System.out.println("\t" + name);
             }
         } else {
-            System.out.println("No Meal Plan has been created yet. Please try again.");
+            printNoMealPlan();
         }
     }
 }
