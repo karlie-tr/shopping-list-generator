@@ -1,0 +1,34 @@
+{
+     "Meals' Names": [
+          "Chicken soup",
+          "Grilled Cheese"
+     ],
+     "Number of Meals": 2,
+     "Grocery List": [
+          "Chicken",
+          "zucchini",
+          "Carrots",
+          "Sourdough bread",
+          "Cheese"
+     ],
+     "Total Cooking Time": 30,
+     "Meals": [
+          {
+               "Cooking Time": 20,
+               "Ingredients Needed": [
+                    "Chicken",
+                    "zucchini",
+                    "Carrots"
+               ],
+               "Name": "Chicken soup"
+          },
+          {
+               "Cooking Time": 10,
+               "Ingredients Needed": [
+                    "Sourdough bread",
+                    "Cheese"
+               ],
+               "Name": "Grilled Cheese"
+          }
+     ]
+}

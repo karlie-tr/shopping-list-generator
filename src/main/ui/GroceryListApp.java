@@ -5,25 +5,26 @@ package ui;
 import model.Meal;
 import model.MealPlan;
 import persistence.JsonReader;
-import persistence.JsonSaver;
+import persistence.JsonWriter;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.*;
 
 public class GroceryListApp {
 
     private static final String JSON_STORE =  "./data/MealPlan.json";
     private final Scanner input;
-    private final MealPlan mp;
+    private MealPlan mp;
     private boolean runProgram;
-    private JsonSaver jsonSaver;
+    private JsonWriter jsonWriter;
     private JsonReader jsonReader;
 
     public GroceryListApp() throws FileNotFoundException {
         input = new Scanner(System.in);
         runProgram = true;
         mp = new MealPlan();
-        jsonSaver = new JsonSaver(JSON_STORE);
+        jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
 
         runGroceryListApp();
@@ -127,21 +128,22 @@ public class GroceryListApp {
 
     // EFFECTS: load a previously saved meal plan from file
     private void loadMealPlan() {
+        try {
+            mp = jsonReader.read();
+            System.out.println("Loaded meal plan from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
     }
 
     // EFFECTS: save current Meal Plan to file
     private void saveMealPlan() {
-        Scanner scan = new Scanner(System.in);
-        String planName;
-
-        System.out.println("Please Enter Meal Plan's Name");
-        planName = scan.nextLine();
 
         try {
-            jsonSaver.open();
-            jsonSaver.write(mp);
-            jsonSaver.close();
-            System.out.println("Saved " + planName + " to " + JSON_STORE);
+            jsonWriter.open();
+            jsonWriter.write(mp);
+            jsonWriter.close();
+            System.out.println("Saved Current Meal Plan to " + JSON_STORE);
         } catch (FileNotFoundException e) {
             System.out.println("Unable to write to file: " + JSON_STORE);
         }
@@ -163,13 +165,13 @@ public class GroceryListApp {
             System.out.println("Which meal would you like to remove?");
             mealName = scan.nextLine();
 
-            for (Meal meal : meals) {
-                if (mealNames.contains(mealName)) {
-                    mp.removeExistingMeal(meal);
-                    System.out.println("Successfully removed the meal!");
-                } else {
-                    System.out.println("This meal does not exist in our meal plan. Please choose another meal.");
-                }
+            if (mealNames.contains(mealName)) {
+                Integer index = mealNames.indexOf(mealName);
+                Meal meal = meals.get(index);
+                mp.removeExistingMeal(meal);
+                System.out.println("Successfully removed the meal!");
+            } else {
+                System.out.println("This meal does not exist in our meal plan. Please choose another meal.");
             }
         }
     }

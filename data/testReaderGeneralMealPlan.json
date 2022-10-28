@@ -1,0 +1,21 @@
+{
+     "Meals' Names": ["overnight oats"],
+     "Number of Meals": 1,
+     "Grocery List": [
+          "oat",
+          "milk",
+          "strawberries",
+          "mango"
+     ],
+     "Total Cooking Time": 10,
+     "Meals": [{
+          "Cooking Time": 10,
+          "Ingredients Needed": [
+               "oat",
+               "milk",
+               "strawberries",
+               "mango"
+          ],
+          "Name": "overnight oats"
+     }]
+}

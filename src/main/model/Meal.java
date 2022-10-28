@@ -1,11 +1,15 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.List;
 
 // Represents a meal that includes the name, the needed ingredients,
 // and cooking time
 
-public class Meal {
+public class Meal implements Writable {
 
     private final String mealName;                       // the name of the meal
     private final List<String> ingredientsNeeded;        // a list of ingredients required for the meal
@@ -36,4 +40,23 @@ public class Meal {
         return ingredientsNeeded;
     }
 
+    @Override
+    public JSONObject mealToJson() {
+        JSONObject json = new JSONObject();
+        json.put("Cooking Time", time);
+        json.put("Ingredients Needed", ingredientsJson());
+        json.put("Name", mealName);
+        return json;
+    }
+
+    // EFFECTS: convert ingredient list to Json Array
+    private JSONArray ingredientsJson() {
+        JSONArray ingredientsJsonArray = new JSONArray();
+
+        for (String i : ingredientsNeeded) {
+            ingredientsJsonArray.put(i);
+        }
+
+        return  ingredientsJsonArray;
+    }
 }

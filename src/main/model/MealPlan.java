@@ -1,5 +1,6 @@
 package model;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import persistence.Writable;
 
@@ -48,9 +49,7 @@ public class MealPlan implements Writable {
         totalCookingTime -= m.getCookingTime();
         numberOfMeals--;
         for (String ingredient : ingredientsNeeded) {
-            if (!(toBuyList.contains(ingredient))) {
-                toBuyList.remove(ingredient);
-            }
+            toBuyList.remove(ingredient);
         }
     }
 
@@ -80,8 +79,44 @@ public class MealPlan implements Writable {
     }
 
     @Override
-    public JSONObject toJson() {
-        return null;
+    public JSONObject mealToJson() {
+        JSONObject json = new JSONObject();
+        json.put("Meals", mealsToJson());
+        json.put("Meals' Names", mealsNamesToJson());
+        json.put("Grocery List",toBuyListToJson());
+        json.put("Total Cooking Time", totalCookingTime);
+        json.put("Number of Meals", numberOfMeals);
+        return json;
+    }
+
+    // EFFECTS: return the groceries list as JSON Array
+    private JSONArray toBuyListToJson() {
+        JSONArray jsonToBuyList = new JSONArray();
+
+        for (String ingredient: toBuyList) {
+            jsonToBuyList.put(ingredient);
+        }
+        return jsonToBuyList;
+    }
+
+    // EFFECTS: return the meals' names as JSON Array
+    private JSONArray mealsNamesToJson() {
+        JSONArray jsonMealsName = new JSONArray();
+
+        for (String name: mealsNames) {
+            jsonMealsName.put(name);
+        }
+        return jsonMealsName;
+    }
+
+    // EFFECTS: return meal list as JSON Array
+    private JSONArray mealsToJson() {
+        JSONArray jsonMealList = new JSONArray();
+
+        for (Meal m: meals) {
+            jsonMealList.put(m.mealToJson());
+        }
+        return jsonMealList;
     }
 
 }

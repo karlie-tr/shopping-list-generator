@@ -9,7 +9,6 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class MealPlanTest {
-
     private final List<String> overnightOatIngredientList = new ArrayList<>();
     private final List<String> chickenBowlIngredientList = new ArrayList<>();
     private final List<String> bagelAndCreamCheeseIngredientList = new ArrayList<>();
@@ -76,6 +75,8 @@ public class MealPlanTest {
         assertEquals(2,mp2.getNumberOfMeals());
         assertEquals(mealNames2,mp2.getNamesOfCurrentMeals());
 
+        grocery2.add("everything bagel");
+        grocery2.add("herb and garlic cream cheese");
         grocery2.add("everything bagel");
         grocery2.add("herb and garlic cream cheese");
         assertEquals(grocery2,mp2.getGroceryList());

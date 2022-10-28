@@ -18,3 +18,8 @@ current meal plan
 - As a user, I want to *save the current meal plan*
 - As a user, I want to *load the previously saved meal plan*
 
+---
+## Reference
+Implementation of JSONReader and JSONWriter is modelled after [JSONSerializationDemo by UBC]
+(https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo)
+
