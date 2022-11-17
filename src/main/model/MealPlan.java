@@ -83,7 +83,7 @@ public class MealPlan implements Writable {
         JSONObject json = new JSONObject();
         json.put("Meals", mealsToJson());
         json.put("Meals' Names", mealsNamesToJson());
-        json.put("Grocery List",toBuyListToJson());
+        json.put("Grocery List", toBuyListToJson());
         json.put("Total Cooking Time", totalCookingTime);
         json.put("Number of Meals", numberOfMeals);
         return json;
@@ -93,7 +93,7 @@ public class MealPlan implements Writable {
     private JSONArray toBuyListToJson() {
         JSONArray jsonToBuyList = new JSONArray();
 
-        for (String ingredient: toBuyList) {
+        for (String ingredient : toBuyList) {
             jsonToBuyList.put(ingredient);
         }
         return jsonToBuyList;
@@ -103,7 +103,7 @@ public class MealPlan implements Writable {
     private JSONArray mealsNamesToJson() {
         JSONArray jsonMealsName = new JSONArray();
 
-        for (String name: mealsNames) {
+        for (String name : mealsNames) {
             jsonMealsName.put(name);
         }
         return jsonMealsName;
@@ -113,7 +113,7 @@ public class MealPlan implements Writable {
     private JSONArray mealsToJson() {
         JSONArray jsonMealList = new JSONArray();
 
-        for (Meal m: meals) {
+        for (Meal m : meals) {
             jsonMealList.put(m.mealToJson());
         }
         return jsonMealList;

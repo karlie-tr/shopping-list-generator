@@ -16,16 +16,16 @@ import java.io.IOException;
 
 public class GroceryListAppUI extends JFrame implements ActionListener {
 
-    public static final String JSON_STORE =  "./data/MealPlan.json";
+    public static final String JSON_STORE = "./data/MealPlan.json";
     protected static final int FRAME_WIDTH = 800;
     protected static final int FRAME_HEIGHT = 600;
     protected static final Font BUTTON_FONT = new Font("SANS_SERIF", Font.BOLD | Font.ITALIC, 20);
     protected static final Color BUTTON_BACKGROUND_COLOR = new Color(197, 104, 36);
     protected static final Color FRAME_BACKGROUND_COLOR = new Color(234, 222, 184);
     protected static final LineBorder BUTTON_BORDER = new LineBorder(Color.BLACK, 2, true);
+    JPanel mainPanel;
     private MealPlan mp;
     private JButton viewTotalCookingTime;
-    JPanel mainPanel;
 
 
     // EFFECTS: constructs a new window
@@ -45,6 +45,10 @@ public class GroceryListAppUI extends JFrame implements ActionListener {
                 saveMealPlanPrompt();
             }
         });
+    }
+
+    public static void main(String[] args) {
+        new GroceryListAppUI();
     }
 
     private JPanel createMainPanel() {
@@ -72,7 +76,7 @@ public class GroceryListAppUI extends JFrame implements ActionListener {
 
     private void setUpHeaders() {
         JPanel greetingPanel = new JPanel();
-        greetingPanel.setLayout(new GridLayout(3,1,5,5));
+        greetingPanel.setLayout(new GridLayout(3, 1, 5, 5));
 
         JLabel header = new JLabel("<html> Hello! <br/> :) <html>");
         JLabel subtext = new JLabel("<html> Please select from the listed <html>"
@@ -116,7 +120,6 @@ public class GroceryListAppUI extends JFrame implements ActionListener {
 
         mainPanel.add(buttonPane);
     }
-
 
     private JButton drawButton(String text) {
         JButton newButton = new JButton(text);
@@ -171,20 +174,18 @@ public class GroceryListAppUI extends JFrame implements ActionListener {
     }
 
     private void popUpMessage(String text, String titleOfPopUp, String type) {
-        int option = 0;
 
         switch (type) {
             case "info":
-                option = JOptionPane.INFORMATION_MESSAGE;
+                JOptionPane.showMessageDialog(null,
+                        text, titleOfPopUp,JOptionPane.INFORMATION_MESSAGE);
                 break;
             case "error":
-                option = JOptionPane.ERROR_MESSAGE;
+                JOptionPane.showMessageDialog(null,
+                        text, titleOfPopUp,JOptionPane.ERROR_MESSAGE);
                 break;
         }
-        JOptionPane.showMessageDialog(null,
-                text, titleOfPopUp, option);
     }
-
 
     private void loadMealPlanPrompt() {
         JsonReader jsonReader = new JsonReader(JSON_STORE);
@@ -196,19 +197,14 @@ public class GroceryListAppUI extends JFrame implements ActionListener {
         if (n == 0) {
             try {
                 mp = jsonReader.read();
-                popUpMessage("File Loaded Successfully!", "Yay!","info");
+                popUpMessage("File Loaded Successfully!", "Yay!", "info");
             } catch (IOException e) {
-                popUpMessage("No Saved File Founded :(", "Error","error");
+                popUpMessage("No Saved File Founded :(", "Error", "error");
                 new MealPlan();
             }
         } else {
             mp = new MealPlan();
         }
-    }
-
-
-    public static void main(String[] args) {
-        new GroceryListAppUI();
     }
 
 

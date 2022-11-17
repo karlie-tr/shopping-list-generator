@@ -6,27 +6,37 @@ import persistence.JsonWriter;
 
 import javax.swing.*;
 import javax.swing.border.Border;
-import javax.swing.border.CompoundBorder;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.FileNotFoundException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static ui.GroceryListAppUI.*;
 
 public class MealPlanWindow extends JFrame implements ActionListener {
-    private static final Dimension FRAME_SIZE = new Dimension(800,600);
-    private static final Font TITLE_FONT = new Font("SANS-SERIF", Font.BOLD | Font.ITALIC, 20);
-    private static final Font SUBTITLE_FONT = new Font("SANS-SERIF", Font.BOLD, 15);
-    private static final Font TEXT_FONT = new Font("MONOSPACED", Font.PLAIN, 15);
     protected static final Color FRAME_BACKGROUND_COLOR = new Color(234, 222, 184);
     protected static final Color GREEN = new Color(160, 159, 87);
     protected static final Color ORANGE = new Color(197, 104, 36);
-    private MealPlan mp;
+    private static final Dimension FRAME_SIZE = new Dimension(800, 600);
+    private static final Font TITLE_FONT = new Font("SANS-SERIF", Font.BOLD | Font.ITALIC, 20);
+    private static final Font SUBTITLE_FONT = new Font("SANS-SERIF", Font.BOLD, 15);
+    private static final Font TEXT_FONT = new Font("MONOSPACED", Font.PLAIN, 15);
+    private static final Border HIGHLIGHTED_BORDER = BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(GREEN, 5),
+            BorderFactory.createEmptyBorder(10, 10, 10, 10));
+    private final MealPlan mp;
     private JButton deleteMealButton;
     private JPanel mealPanels;
+    private JPanel inputPanel;
     private JPanel selectedPane;
+    private final JTextField name = new JTextField();
+    private final JTextField time = new JTextField();
 
     public MealPlanWindow(MealPlan mp) {
         this.mp = mp;
@@ -43,7 +53,7 @@ public class MealPlanWindow extends JFrame implements ActionListener {
 
     private void initializeButtons() {
         JPanel buttons = new JPanel();
-        buttons.setLayout(new GridLayout(0,4,20,20));
+        buttons.setLayout(new GridLayout(0, 4, 20, 20));
 
         JButton addMealButton = drawButton("Add", "data/layer-plus.png");
         JButton saveMealPlanButton = drawButton("Save", "data/disk.png");
@@ -54,7 +64,7 @@ public class MealPlanWindow extends JFrame implements ActionListener {
         buttons.add(saveMealPlanButton);
         buttons.add(deleteMealButton);
         buttons.add(refreshButton);
-        buttons.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+        buttons.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         add(buttons, BorderLayout.PAGE_END);
     }
@@ -73,30 +83,22 @@ public class MealPlanWindow extends JFrame implements ActionListener {
         return newButton;
     }
 
-
-    @SuppressWarnings("checkstyle:MethodLength")
     private void initializeMeals() {
-        mealPanels = new JPanel();
-        mealPanels.setLayout(new GridLayout(0,1, 10,10));
+        mealPanels = new JPanel(new GridLayout(0, 1, 10, 10));
         mealPanels.setBorder(BorderFactory.createEmptyBorder(25, 25, 25, 25));
 
         List<Meal> meals = mp.getMeals();
-        for (Meal m: meals) {
+        for (Meal m : meals) {
             JPanel meal = createMealPane(m);
             meal.setBorder(BorderFactory.createCompoundBorder(
                     BorderFactory.createTitledBorder("Meal #" + (meals.indexOf(m) + 1)),
                     BorderFactory.createEmptyBorder(10, 10, 10, 10)));
-
             meal.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     selectedPane = (JPanel) e.getComponent();
                     if (selectedPane.equals(meal)) {
-                        CompoundBorder border = (CompoundBorder) meal.getBorder();
-                        Border margin = border.getInsideBorder();
-
-                        meal.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(GREEN, 5),
-                                margin));
+                        meal.setBorder(HIGHLIGHTED_BORDER);
                         deleteMealButton.setBackground(ORANGE);
                     }
                 }
@@ -104,16 +106,15 @@ public class MealPlanWindow extends JFrame implements ActionListener {
             mealPanels.add(meal);
         }
 
-        JScrollPane mealsScrollPane = new JScrollPane(mealPanels,
-                JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+        JScrollPane mealsScrollPane = new JScrollPane(mealPanels, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        add(mealsScrollPane, BorderLayout.CENTER);
 
+        add(mealsScrollPane, BorderLayout.CENTER);
     }
 
     private JPanel createMealPane(Meal m) {
         JPanel mealInfo = new JPanel();
-        mealInfo.setLayout(new BorderLayout(20,5));
+        mealInfo.setLayout(new BorderLayout(20, 5));
 
         JLabel mealName = new JLabel(m.getMealName(), SwingConstants.CENTER);
         mealName.setFont(TITLE_FONT);
@@ -135,7 +136,7 @@ public class MealPlanWindow extends JFrame implements ActionListener {
 
     private JPanel createCookingTimePanel(Meal m) {
         JPanel cookingTime = new JPanel();
-        cookingTime.setLayout(new BorderLayout(5,5));
+        cookingTime.setLayout(new BorderLayout(5, 5));
         JLabel cookingTimeTitle = new JLabel("Cooking Time: ");
         cookingTimeTitle.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createMatteBorder(0, 0, 2, 0, Color.BLACK),
@@ -153,10 +154,10 @@ public class MealPlanWindow extends JFrame implements ActionListener {
 
     private JPanel createIngredientsPanel(List<String> ingredients) {
         JPanel ingredientsPanel = new JPanel();
-        ingredientsPanel.setLayout(new BorderLayout(5,5));
+        ingredientsPanel.setLayout(new BorderLayout(5, 5));
 
         JPanel ingredientPane = new JPanel();
-        ingredientPane.setLayout(new GridLayout(0,2,5,5));
+        ingredientPane.setLayout(new GridLayout(0, 2, 5, 5));
 
         JLabel subtitle = new JLabel("Ingredients: ");
         subtitle.setFont(SUBTITLE_FONT);
@@ -165,7 +166,7 @@ public class MealPlanWindow extends JFrame implements ActionListener {
                 BorderFactory.createEmptyBorder(10, 0, 10, 20)));
         ingredientsPanel.add(subtitle, BorderLayout.PAGE_START);
 
-        for (String i: ingredients) {
+        for (String i : ingredients) {
             JLabel ingredientLabel = new JLabel("• " + i);
             ingredientLabel.setFont(TEXT_FONT);
             ingredientPane.add(ingredientLabel);
@@ -233,7 +234,7 @@ public class MealPlanWindow extends JFrame implements ActionListener {
     private void addNewMeal(MealPlan mp) {
         Map<String, List<String>> response = addMealDialog();
         String name = String.valueOf(response.get("name").get(0));
-        int time = Integer.valueOf(response.get("time").get(0));
+        int time = Integer.parseInt(response.get("time").get(0));
         List<String> ingredientsNeeded = response.get("ingredients");
 
         mp.addNewMeal(new Meal(name, ingredientsNeeded, time));
@@ -249,19 +250,11 @@ public class MealPlanWindow extends JFrame implements ActionListener {
         new MealPlanWindow(mp);
     }
 
-    @SuppressWarnings("checkstyle:MethodLength")
-    private Map<String,List<String>> addMealDialog() {
-
+    private Map<String, List<String>> addMealDialog() {
         int numberOfIngredients = getNumberOfIngredientsDialog();
-        JPanel inputPanel = new JPanel();
-        inputPanel.setLayout(new GridLayout(0,1,5,5));
+        inputPanel = new JPanel(new GridLayout(0, 1, 5, 5));
 
-        JTextField name = new JTextField();
-        JTextField time = new JTextField();
-        inputPanel.add(new JLabel("Name: "));
-        inputPanel.add(name);
-        inputPanel.add(new JLabel("Time To Cook: "));
-        inputPanel.add(time);
+        initializeInputPanel();
 
         JTextField[] ingredientTextFields = new JTextField[numberOfIngredients];
 
@@ -271,25 +264,31 @@ public class MealPlanWindow extends JFrame implements ActionListener {
             inputPanel.add(ingredientTextFields[i]);
         }
 
-        JOptionPane.showConfirmDialog(this, inputPanel,
-                "Add Meal", JOptionPane.OK_CANCEL_OPTION);
+        JOptionPane.showConfirmDialog(this, inputPanel, "Add Meal", JOptionPane.OK_CANCEL_OPTION);
 
         Map<String, List<String>> mealMap = new HashMap<>();
 
-        List<String> nameList = new ArrayList();
+        List<String> nameList = new ArrayList<>();
         nameList.add(name.getText());
-        List<String> timeList = new ArrayList();
+        List<String> timeList = new ArrayList<>();
         timeList.add(time.getText());
         List<String> ingredients = new ArrayList<>();
         for (int i = 0; i < numberOfIngredients; i++) {
             ingredients.add(ingredientTextFields[i].getText());
         }
 
-        mealMap.put("name",nameList);
-        mealMap.put("time",timeList);
-        mealMap.put("ingredients",ingredients);
+        mealMap.put("name", nameList);
+        mealMap.put("time", timeList);
+        mealMap.put("ingredients", ingredients);
 
         return mealMap;
+    }
+
+    private void initializeInputPanel() {
+        inputPanel.add(new JLabel("Name: "));
+        inputPanel.add(name);
+        inputPanel.add(new JLabel("Time To Cook: "));
+        inputPanel.add(time);
     }
 
 
@@ -325,17 +324,18 @@ public class MealPlanWindow extends JFrame implements ActionListener {
     }
 
     private void popUpMessage(String text, String titleOfPopUp, String type) {
-        int option = 0;
 
         switch (type) {
             case "info":
-                option = JOptionPane.INFORMATION_MESSAGE;
+                JOptionPane.showMessageDialog(null,
+                        text, titleOfPopUp, JOptionPane.INFORMATION_MESSAGE);
                 break;
             case "error":
-                option = JOptionPane.ERROR_MESSAGE;
+                JOptionPane.showMessageDialog(null,
+                        text, titleOfPopUp, JOptionPane.ERROR_MESSAGE);
+                break;
         }
-        JOptionPane.showMessageDialog(null,
-                text, titleOfPopUp, option);
+
     }
 
 }

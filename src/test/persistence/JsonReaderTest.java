@@ -26,7 +26,7 @@ public class JsonReaderTest extends JsonTest {
         JsonReader reader = new JsonReader("./data/testReaderEmptyMealPlan.json");
         try {
             MealPlan mp = reader.read();
-            assertEquals(0,mp.getNumberOfMeals());
+            assertEquals(0, mp.getNumberOfMeals());
         } catch (IOException e) {
             fail("Couldn't read from file");
         }
@@ -39,7 +39,7 @@ public class JsonReaderTest extends JsonTest {
             MealPlan mp = reader.read();
             List<String> groceryList = mp.getGroceryList();
             assertEquals(1, mp.getNumberOfMeals());
-            assertEquals(4,groceryList.size());
+            assertEquals(4, groceryList.size());
         } catch (IOException e) {
             fail("Couldn't read from file");
         }

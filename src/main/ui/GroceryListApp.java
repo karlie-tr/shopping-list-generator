@@ -13,12 +13,12 @@ import java.util.*;
 
 public class GroceryListApp {
 
-    public static final String JSON_STORE =  "./data/MealPlan.json";
+    public static final String JSON_STORE = "./data/MealPlan.json";
     private final Scanner input;
     private MealPlan mp;
     private boolean runProgram;
-    private JsonWriter jsonWriter;
-    private JsonReader jsonReader;
+    private final JsonWriter jsonWriter;
+    private final JsonReader jsonReader;
 
     public GroceryListApp() throws FileNotFoundException {
         input = new Scanner(System.in);
@@ -193,7 +193,7 @@ public class GroceryListApp {
     private void printIngredientNameAndQuantity(List<String> toBuyList) {
         Set<String> ingredientNames = new HashSet<>(toBuyList);
 
-        for (String i: ingredientNames) {
+        for (String i : ingredientNames) {
             System.out.println("\t" + i + ": " + Collections.frequency(toBuyList, i));
         }
     }

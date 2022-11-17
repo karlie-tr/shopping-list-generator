@@ -11,7 +11,7 @@ import java.io.PrintWriter;
 public class JsonWriter {
 
     private static final int TAB = 5;
-    private String destination;
+    private final String destination;
     private PrintWriter writer;
 
     // EFFECTS: constructs writer to write to destination file
@@ -24,7 +24,7 @@ public class JsonWriter {
     // EFFECTS: opens writer;
     //          throw FileNotFoundException if destination file is not available
     public void open() throws FileNotFoundException {
-        writer = new PrintWriter(new File(destination));
+        writer = new PrintWriter(destination);
     }
 
     // MODIFIES: this

@@ -57,6 +57,6 @@ public class Meal implements Writable {
             ingredientsJsonArray.put(i);
         }
 
-        return  ingredientsJsonArray;
+        return ingredientsJsonArray;
     }
 }

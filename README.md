@@ -23,3 +23,13 @@ current meal plan
 Implementation of JSONReader and JSONWriter is modelled after [JSONSerializationDemo by UBC]
 (https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo)
 
+---
+# Instructions for Grader
+
+- You can generate the first required event related to adding Xs to a Y by clicking [View] in the main window then [Add]
+to add a new meal into the exiting meal plan, which also include adding various ingredients into the ingredient list.
+- You can generate the second required event related to adding Xs to a Y by ...
+- You can locate my visual component by icons that were added in the starting window and icons in the buttons.
+- You can save the state of my application by...
+- You can reload the state of my application by...
+

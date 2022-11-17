@@ -15,7 +15,7 @@ import java.util.stream.Stream;
 
 // Represents a reader that reads meal plan from JSON data stored in file
 public class JsonReader {
-    private String source;
+    private final String source;
 
     // EFFECTS: constructs reader to read from source file
     public JsonReader(String source) {
@@ -64,7 +64,7 @@ public class JsonReader {
         String name = jsonObject.getString("Name");
         JSONArray ingredientListJson = jsonObject.getJSONArray("Ingredients Needed");
         List<String> ingredientList = new ArrayList<>();
-        Integer cookingTime = jsonObject.getInt("Cooking Time");
+        int cookingTime = jsonObject.getInt("Cooking Time");
 
         for (Object json : ingredientListJson) {
             String ingredient = String.valueOf(json);
