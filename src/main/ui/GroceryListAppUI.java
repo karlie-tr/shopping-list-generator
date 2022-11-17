@@ -47,10 +47,6 @@ public class GroceryListAppUI extends JFrame implements ActionListener {
         });
     }
 
-    public static void main(String[] args) {
-        new GroceryListAppUI();
-    }
-
     private JPanel createMainPanel() {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new GridLayout(0, 2, 10, 10));
@@ -101,11 +97,13 @@ public class GroceryListAppUI extends JFrame implements ActionListener {
 
     private void setUpButtons() {
         JPanel buttonPane = new JPanel();
-        buttonPane.setLayout(new GridLayout(3, 1, 20, 20));
+        buttonPane.setLayout(new GridLayout(4, 1, 20, 20));
         buttonPane.setPreferredSize(new Dimension(FRAME_WIDTH / 2, FRAME_HEIGHT / 2));
 
-        JButton viewMealPlan = drawButton("View");
-        JButton viewGroceryList = drawButton("Grocery List");
+        JButton viewMealPlanButton = drawButton("View");
+        JButton groceryListButton = drawButton("Grocery List");
+        JButton loadButton = drawButton("Load");
+
         viewTotalCookingTime = drawButton("Total Cooking Time: " + mp.getTotalCookingTime() + " min");
         viewTotalCookingTime.setActionCommand("Refresh");
         ImageIcon refreshIcon = new ImageIcon("data/refresh.png");
@@ -114,9 +112,10 @@ public class GroceryListAppUI extends JFrame implements ActionListener {
         viewTotalCookingTime.setIcon(refreshIconScaled);
         viewTotalCookingTime.setIconTextGap(15);
 
-        buttonPane.add(viewMealPlan);
-        buttonPane.add(viewGroceryList);
+        buttonPane.add(viewMealPlanButton);
         buttonPane.add(viewTotalCookingTime);
+        buttonPane.add(groceryListButton);
+        buttonPane.add(loadButton);
 
         mainPanel.add(buttonPane);
     }
@@ -142,6 +141,8 @@ public class GroceryListAppUI extends JFrame implements ActionListener {
             case "View":
                 new MealPlanWindow(mp);
                 break;
+            case "Load":
+                loadMealPlanPrompt();
             case "Refresh":
                 updateTotalTime(viewTotalCookingTime);
                 break;
@@ -207,6 +208,9 @@ public class GroceryListAppUI extends JFrame implements ActionListener {
         }
     }
 
+    public static void main(String[] args) {
+        new GroceryListAppUI();
+    }
 
 }
 

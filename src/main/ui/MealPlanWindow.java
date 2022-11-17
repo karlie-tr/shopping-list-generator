@@ -32,6 +32,7 @@ public class MealPlanWindow extends JFrame implements ActionListener {
             BorderFactory.createEmptyBorder(10, 10, 10, 10));
     private final MealPlan mp;
     private JButton deleteMealButton;
+    private JButton refreshButton;
     private JPanel mealPanels;
     private JPanel inputPanel;
     private JPanel selectedPane;
@@ -58,7 +59,7 @@ public class MealPlanWindow extends JFrame implements ActionListener {
         JButton addMealButton = drawButton("Add", "data/layer-plus.png");
         JButton saveMealPlanButton = drawButton("Save", "data/disk.png");
         deleteMealButton = drawButton("Delete", "data/layer-minus.png");
-        JButton refreshButton = drawButton("Refresh", "data/refresh.png");
+        refreshButton = drawButton("Refresh", "data/refresh.png");
 
         buttons.add(addMealButton);
         buttons.add(saveMealPlanButton);
@@ -210,24 +211,33 @@ public class MealPlanWindow extends JFrame implements ActionListener {
                 break;
             case "Refresh":
                 new MealPlanWindow(mp);
+                deleteMealButton.setBackground(GREEN);
                 dispose();
                 break;
         }
 
     }
 
-    private void deleteMeal(MealPlan mp) {
-        mealPanels.remove(selectedPane);
+    private void deleteMeal(MealPlan mp) throws NullPointerException {
+        try {
+            mealPanels.remove(selectedPane);
 
-        JLabel selectedLabel = (JLabel) selectedPane.getComponent(0);
-        String mealName = selectedLabel.getText();
-        List<String> mealNames = mp.getNamesOfCurrentMeals();
-        List<Meal> meals = mp.getMeals();
-        int index = mealNames.indexOf(mealName);
-        Meal meal = meals.get(index);
+            JLabel selectedLabel = (JLabel) selectedPane.getComponent(0);
+            String mealName = selectedLabel.getText();
+            List<String> mealNames = mp.getNamesOfCurrentMeals();
+            List<Meal> meals = mp.getMeals();
+            int index = mealNames.indexOf(mealName);
+            Meal meal = meals.get(index);
+            mp.removeExistingMeal(meal);
 
-        mp.removeExistingMeal(meal);
-        revalidate();
+            new MealPlanWindow(mp);
+            deleteMealButton.setBackground(GREEN);
+            dispose();
+
+        } catch (NullPointerException npe) {
+            JOptionPane.showMessageDialog(null,
+                    "Please Select A Meal and Try Again!", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
 
