@@ -13,7 +13,7 @@ import java.util.*;
 
 public class GroceryListApp {
 
-    private static final String JSON_STORE =  "./data/MealPlan.json";
+    public static final String JSON_STORE =  "./data/MealPlan.json";
     private final Scanner input;
     private MealPlan mp;
     private boolean runProgram;
@@ -138,7 +138,6 @@ public class GroceryListApp {
 
     // EFFECTS: save current Meal Plan to file
     private void saveMealPlan() {
-
         try {
             jsonWriter.open();
             jsonWriter.write(mp);
@@ -166,7 +165,7 @@ public class GroceryListApp {
             mealName = scan.nextLine();
 
             if (mealNames.contains(mealName)) {
-                Integer index = mealNames.indexOf(mealName);
+                int index = mealNames.indexOf(mealName);
                 Meal meal = meals.get(index);
                 mp.removeExistingMeal(meal);
                 System.out.println("Successfully removed the meal!");

@@ -1,34 +1,64 @@
 {
      "Meals' Names": [
-          "Chicken soup",
-          "Grilled Cheese"
+          "Bagel and Creamcheese",
+          "Fruit Salad",
+          "Oatmeal Pancake",
+          "Yogurt"
      ],
-     "Number of Meals": 2,
+     "Number of Meals": 4,
      "Grocery List": [
-          "Chicken",
-          "zucchini",
-          "Carrots",
-          "Sourdough bread",
-          "Cheese"
+          "Creamcheese",
+          "Bagel",
+          "Grapes",
+          "Strawberries",
+          "Kiwi",
+          "Oatmeal",
+          "Milk",
+          "Butter",
+          "Banana",
+          "Strawberries",
+          "Granola",
+          "Greek Yogurt",
+          "Blueberries"
      ],
-     "Total Cooking Time": 30,
+     "Total Cooking Time": 40,
      "Meals": [
           {
-               "Cooking Time": 20,
+               "Cooking Time": 5,
                "Ingredients Needed": [
-                    "Chicken",
-                    "zucchini",
-                    "Carrots"
+                    "Creamcheese",
+                    "Bagel"
                ],
-               "Name": "Chicken soup"
+               "Name": "Bagel and Creamcheese"
           },
           {
                "Cooking Time": 10,
                "Ingredients Needed": [
-                    "Sourdough bread",
-                    "Cheese"
+                    "Grapes",
+                    "Strawberries",
+                    "Kiwi"
                ],
-               "Name": "Grilled Cheese"
+               "Name": "Fruit Salad"
+          },
+          {
+               "Cooking Time": 20,
+               "Ingredients Needed": [
+                    "Oatmeal",
+                    "Milk",
+                    "Butter",
+                    "Banana",
+                    "Strawberries"
+               ],
+               "Name": "Oatmeal Pancake"
+          },
+          {
+               "Cooking Time": 5,
+               "Ingredients Needed": [
+                    "Granola",
+                    "Greek Yogurt",
+                    "Blueberries"
+               ],
+               "Name": "Yogurt"
           }
      ]
 }
