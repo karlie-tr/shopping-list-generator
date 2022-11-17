@@ -32,7 +32,6 @@ public class MealPlanWindow extends JFrame implements ActionListener {
             BorderFactory.createEmptyBorder(10, 10, 10, 10));
     private final MealPlan mp;
     private JButton deleteMealButton;
-    private JButton refreshButton;
     private JPanel mealPanels;
     private JPanel inputPanel;
     private JPanel selectedPane;
@@ -58,8 +57,8 @@ public class MealPlanWindow extends JFrame implements ActionListener {
 
         JButton addMealButton = drawButton("Add", "data/layer-plus.png");
         JButton saveMealPlanButton = drawButton("Save", "data/disk.png");
+        JButton refreshButton = drawButton("Refresh", "data/refresh.png");
         deleteMealButton = drawButton("Delete", "data/layer-minus.png");
-        refreshButton = drawButton("Refresh", "data/refresh.png");
 
         buttons.add(addMealButton);
         buttons.add(saveMealPlanButton);
@@ -241,18 +240,23 @@ public class MealPlanWindow extends JFrame implements ActionListener {
     }
 
 
-    private void addNewMeal(MealPlan mp) {
-        Map<String, List<String>> response = addMealDialog();
-        String name = String.valueOf(response.get("name").get(0));
-        int time = Integer.parseInt(response.get("time").get(0));
-        List<String> ingredientsNeeded = response.get("ingredients");
+    private void addNewMeal(MealPlan mp) throws IllegalArgumentException {
+        try {
+            Map<String, List<String>> response = addMealDialog();
+            String name = String.valueOf(response.get("name").get(0));
+            int time = Integer.parseInt(response.get("time").get(0));
+            List<String> ingredientsNeeded = response.get("ingredients");
 
-        mp.addNewMeal(new Meal(name, ingredientsNeeded, time));
+            mp.addNewMeal(new Meal(name, ingredientsNeeded, time));
+            updateMealPlanWindow();
+            revalidate();
+            repaint();
+            dispose();
+        } catch (Exception e) {
+            popUpMessage("Invalid Input, Please Try Again.", "Error", "error");
 
-        updateMealPlanWindow();
-        revalidate();
-        repaint();
-        dispose();
+        }
+
     }
 
     private void updateMealPlanWindow() {

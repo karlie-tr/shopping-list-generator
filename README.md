@@ -27,10 +27,13 @@ Implementation of JSONReader and JSONWriter is modelled after [JSONSerialization
 # Instructions for Grader
 
 - You can generate the first required event related to adding Xs to a Y by clicking [View] in the main window then [Add]
-to add a new meal into the exiting meal plan, which also include adding various ingredients into the ingredient list.
+to add a new meal into the exiting meal plan, which also include adding various ingredients into the ingredient list. 
+After pressing [Add], window would pop up, please fill in the fields and the new meal would appear in the Meal Plan window.
 - You can generate the second required event related to adding Xs to a Y by [Grocery List] in the main window then [Add] 
-add the bottom of the checklist. 
-- You can locate my visual component by icons that were added in the starting window and icons in the buttons.
+at the bottom of the checklist. Once you finish typing the new Ingredient, press Enter so that it would
+appear in the grocery list. The newly added items would be in a different color and do not have a quantity because it 
+does not belong to any meal plan.
+- You can locate my visual component by icons that were added in the starting window and different icons in various buttons.
 - You can save the state of my application by clicking [View] in the main window 
 then [Save] OR close the window and a prompt asking you to save would pop up.
 - You can reload the state of my application by clicking [Yes] in the pop-up message that appear when the application

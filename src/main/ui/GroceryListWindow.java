@@ -14,15 +14,15 @@ import java.util.List;
 import static ui.GroceryListAppUI.FRAME_HEIGHT;
 import static ui.GroceryListAppUI.FRAME_WIDTH;
 import static ui.MealPlanWindow.GREEN;
+import static ui.MealPlanWindow.ORANGE;
 
 public class GroceryListWindow extends JFrame implements ActionListener {
     private static final Font TEXT_FONT = new Font("SANS_SERIF", Font.PLAIN, 12);
-    private final List<String> groceryList;
     private JPanel groceryPanel;
     private JButton addButton;
 
     public GroceryListWindow(MealPlan mp) {
-        groceryList = mp.getGroceryList();
+        List<String> groceryList = mp.getGroceryList();
 
         frameSetUp();
 
@@ -64,6 +64,7 @@ public class GroceryListWindow extends JFrame implements ActionListener {
         JPanel checkList = new JPanel();
         checkList.setLayout(new GridLayout(0, 1, 2, 2));
         checkList.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+
         Set<String> ingredientNames = new HashSet<>(toBuyList);
 
         for (String i : ingredientNames) {
@@ -114,13 +115,11 @@ public class GroceryListWindow extends JFrame implements ActionListener {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    List<String> newList = new ArrayList<>();
-                    newList.add(newItemField.getText());
                     checkList.remove(newItemField);
-                    newList.addAll(groceryList);
-                    groceryPanel.remove(checkList);
-                    JPanel newCheckList = createNameAndQuantityCheckBox(newList);
-                    groceryPanel.add(newCheckList);
+                    JPanel newCheckBox = createCheckBox(newItemField.getText().toLowerCase());
+                    newCheckBox.setBackground(ORANGE);
+                    checkList.add(newCheckBox);
+                    checkList.add(addButton);
                     revalidate();
                 }
             }
