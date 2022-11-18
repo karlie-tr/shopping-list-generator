@@ -19,6 +19,7 @@ import java.util.Map;
 
 import static ui.GroceryListAppUI.*;
 
+// Represent a frame that contains the information related to the meal plan
 public class MealPlanWindow extends JFrame implements ActionListener {
     protected static final Color FRAME_BACKGROUND_COLOR = new Color(234, 222, 184);
     protected static final Color GREEN = new Color(160, 159, 87);
@@ -32,10 +33,10 @@ public class MealPlanWindow extends JFrame implements ActionListener {
             BorderFactory.createEmptyBorder(10, 10, 10, 10));
     private final MealPlan mp;
     private JButton deleteMealButton;
-    private JPanel mealPanels;
-    private JPanel inputPanel;
+    private JPanel mealsPanel;
     private JPanel selectedPane;
 
+    // EFFECTS: set up the meal plan window and meal plan
     public MealPlanWindow(MealPlan mp) {
         this.mp = mp;
 
@@ -49,24 +50,25 @@ public class MealPlanWindow extends JFrame implements ActionListener {
         initializeButtons();
     }
 
+    // MODIFIES: this
+    // EFFECTS: set up button pane
     private void initializeButtons() {
         JPanel buttons = new JPanel();
-        buttons.setLayout(new GridLayout(0, 4, 20, 20));
+        buttons.setLayout(new GridLayout(0, 3, 20, 20));
 
         JButton addMealButton = drawButton("Add", "data/layer-plus.png");
         JButton saveMealPlanButton = drawButton("Save", "data/disk.png");
-        JButton refreshButton = drawButton("Refresh", "data/refresh.png");
         deleteMealButton = drawButton("Delete", "data/layer-minus.png");
 
         buttons.add(addMealButton);
         buttons.add(saveMealPlanButton);
         buttons.add(deleteMealButton);
-        buttons.add(refreshButton);
         buttons.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         add(buttons, BorderLayout.PAGE_END);
     }
 
+    // EFFECTS: create buttons and set their action listener and action command
     private JButton drawButton(String text, String iconPath) {
         ImageIcon buttonIcon = new ImageIcon(iconPath);
         ImageIcon scaledIcon = new ImageIcon(buttonIcon.getImage().getScaledInstance(30,
@@ -81,9 +83,12 @@ public class MealPlanWindow extends JFrame implements ActionListener {
         return newButton;
     }
 
+    // MODIFIES: this
+    // EFFECTS: create a main panel that contains all meals in meal plan and add them to main panel;
+    //          Set action when user clicked on the individual meals
     private void initializeMealsPanel() {
-        mealPanels = new JPanel(new GridLayout(0, 1, 10, 10));
-        mealPanels.setBorder(BorderFactory.createEmptyBorder(25, 25, 25, 25));
+        mealsPanel = new JPanel(new GridLayout(0, 1, 10, 10));
+        mealsPanel.setBorder(BorderFactory.createEmptyBorder(25, 25, 25, 25));
 
         List<Meal> meals = mp.getMeals();
         for (Meal m : meals) {
@@ -101,15 +106,17 @@ public class MealPlanWindow extends JFrame implements ActionListener {
                     }
                 }
             });
-            mealPanels.add(meal);
+            mealsPanel.add(meal);
         }
 
-        JScrollPane mealsScrollPane = new JScrollPane(mealPanels, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+        JScrollPane mealsScrollPane = new JScrollPane(mealsPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
         add(mealsScrollPane, BorderLayout.CENTER);
     }
 
+    // MODIFIES: this
+    // EFFECTS: create JPanel for a meal in meal plan
     private JPanel initializeIndividualMealPanel(Meal m) {
         JPanel mealInfo = new JPanel();
         mealInfo.setLayout(new BorderLayout(20, 5));
@@ -122,7 +129,6 @@ public class MealPlanWindow extends JFrame implements ActionListener {
         mealName.setPreferredSize(new Dimension(FRAME_WIDTH / 3, FRAME_HEIGHT / 10));
 
         JPanel cookingTime = initializeTimePanel(m);
-
         JPanel ingredients = initializeIngredientsPanel(m.getIngredients());
 
         mealInfo.add(mealName, BorderLayout.LINE_START);
@@ -132,17 +138,20 @@ public class MealPlanWindow extends JFrame implements ActionListener {
         return mealInfo;
     }
 
+    // MODIFIES: mealInfo panel
+    // EFFECTS: create JPanel for cooking time of meal
     private JPanel initializeTimePanel(Meal m) {
         JPanel timePanel = new JPanel();
         timePanel.setLayout(new BorderLayout(5, 5));
+
         JLabel heading = new JLabel("Cooking Time: ");
         heading.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createMatteBorder(0, 0, 2, 0, Color.BLACK),
                 BorderFactory.createEmptyBorder(10, 0, 10, 20)));
         heading.setFont(SUBTITLE_FONT);
-
         JLabel description = new JLabel("   " + m.getCookingTime() + " min");
         description.setFont(TEXT_FONT);
+
         timePanel.add(heading, BorderLayout.PAGE_START);
         timePanel.add(description, BorderLayout.CENTER);
 
@@ -150,6 +159,8 @@ public class MealPlanWindow extends JFrame implements ActionListener {
     }
 
 
+    // MODIFIES: mealInfo panel
+    // EFFECTS: create JPanel that contains the JLabels of all ingredients in meal
     private JPanel initializeIngredientsPanel(List<String> ingredients) {
         JPanel ingredientsPanel = new JPanel();
         ingredientsPanel.setLayout(new BorderLayout(5, 5));
@@ -176,6 +187,8 @@ public class MealPlanWindow extends JFrame implements ActionListener {
     }
 
 
+    // MODIFIES: this
+    // EFFECTS: Set up the layout of main panel
     private JPanel initializeMainPanel() {
         JPanel mainPanel = new JPanel();
         mainPanel.setBorder(BorderFactory.createEmptyBorder(50, 50, 40, 50));
@@ -183,7 +196,8 @@ public class MealPlanWindow extends JFrame implements ActionListener {
         return mainPanel;
     }
 
-
+    // MODIFIES: this
+    // EFFECTS: set up the frame
     private void frameSetUp() {
         setTitle("Meal Plan");
         setSize(FRAME_SIZE);
@@ -193,34 +207,32 @@ public class MealPlanWindow extends JFrame implements ActionListener {
         setVisible(true);
     }
 
+    // EFFECTS: set actions for buttons
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "Save":
-                saveMeals();
+                savePopUp();
                 break;
 
             case "Add":
                 addNewMeal(mp);
-                revalidate();
+                updateMealPlanWindow();
                 break;
 
             case "Delete":
                 deleteMeal(mp);
-                deleteMealButton.setBackground(GREEN);
-                revalidate();
-                break;
-
-            case "Refresh":
                 updateMealPlanWindow();
                 break;
         }
 
     }
 
+    // MODIFIES: mealsPanel, mp
+    // EFFECTS: delete the selected JLabel from the mealsPanel; if no label is selected, show error message
     private void deleteMeal(MealPlan mp) throws NullPointerException {
         try {
-            mealPanels.remove(selectedPane);
+            mealsPanel.remove(selectedPane);
             JLabel selectedLabel = (JLabel) selectedPane.getComponent(0);
             String mealName = selectedLabel.getText();
             List<String> mealNames = mp.getNamesOfCurrentMeals();
@@ -228,14 +240,15 @@ public class MealPlanWindow extends JFrame implements ActionListener {
             int index = mealNames.indexOf(mealName);
             Meal meal = meals.get(index);
             mp.removeExistingMeal(meal);
-
         } catch (NullPointerException npe) {
             JOptionPane.showMessageDialog(null,
                     "Please Select A Meal and Try Again!", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-
+    // MODIFIES: mealsPanel, mp
+    // EFFECTS: add a new meal based on users' input;
+    //          if input is invalid, shows error message
     private void addNewMeal(MealPlan mp) throws IllegalArgumentException {
         try {
             Map<String, String> nameAndTime = getNameAndTimeDialog();
@@ -246,7 +259,7 @@ public class MealPlanWindow extends JFrame implements ActionListener {
             mp.addNewMeal(newMeal);
             JPanel newMealPanel = initializeIndividualMealPanel(newMeal);
             newMealPanel.setBorder(HIGHLIGHTED_BORDER);
-            mealPanels.add(newMealPanel);
+            mealsPanel.add(newMealPanel);
 
         } catch (Exception e) {
             popUpMessage("Invalid Input, Please Try Again.", "Error", "error");
@@ -255,21 +268,22 @@ public class MealPlanWindow extends JFrame implements ActionListener {
 
     }
 
+    // MODIFIES: this
+    // EFFECTS: create a new updated MealPlanWindow
     private void updateMealPlanWindow() {
-        removeAll();
         new MealPlanWindow(mp);
-        validate();
         dispose();
     }
 
+    // EFFECTS: create a new dialog the asks user to input the meal's name and cooking time
     private Map<String, String> getNameAndTimeDialog() {
         Map<String,String> generalInfoMap = new HashMap<>();
-        inputPanel = new JPanel(new GridLayout(0, 1, 5, 5));
+        JPanel inputPanel = new JPanel(new GridLayout(0, 1, 5, 5));
 
         inputPanel.add(new JLabel("Name: "));
         JTextField name = new JTextField();
         inputPanel.add(name);
-        inputPanel.add(new JLabel("Time To Cook: "));
+        inputPanel.add(new JLabel("Time To Cook (minutes): "));
         JTextField time = new JTextField();
         inputPanel.add(time);
         JOptionPane.showConfirmDialog(this, inputPanel, "Add General Meal Info",
@@ -280,6 +294,7 @@ public class MealPlanWindow extends JFrame implements ActionListener {
         return generalInfoMap;
     }
 
+    // EFFECTS: create a new dialog the asks user to input the ingredients
     private List<String> getIngredientsDialog() {
         JPanel inputPanel = new JPanel(new GridLayout(0,1,5,5));
 
@@ -302,6 +317,7 @@ public class MealPlanWindow extends JFrame implements ActionListener {
         return ingredients;
     }
 
+    // EFFECTS: create a new dialog the asks user to input the number of ingredients
     private int getNumberOfIngredientsDialog() {
         JPanel labelAndText = new JPanel();
         labelAndText.setLayout(new GridLayout(0, 1, 5, 5));
@@ -315,11 +331,9 @@ public class MealPlanWindow extends JFrame implements ActionListener {
         return Integer.parseInt(numberOfIngredients.getText());
     }
 
-
-    private void saveMeals() {
-        savePopUp();
-    }
-
+    // EFFECTS: create a save confirmation dialog;
+    //          If user choose yes, save current mp to file;
+    //          Otherwise, close the application
     private void savePopUp() {
         JsonWriter jsonWriter = new JsonWriter(JSON_STORE);
         try {
@@ -332,6 +346,7 @@ public class MealPlanWindow extends JFrame implements ActionListener {
         }
     }
 
+    // EFFECTS: create a message
     private void popUpMessage(String text, String titleOfPopUp, String type) {
 
         switch (type) {

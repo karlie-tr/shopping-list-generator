@@ -20,15 +20,19 @@ current meal plan
 
 ---
 ## Reference
-Implementation of JSONReader and JSONWriter is modelled after [JSONSerializationDemo by UBC]
+- Implementation of JSONReader and JSONWriter is modelled after [JSONSerializationDemo by UBC]
 (https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo)
+- Implementation of GUI is modelled after examples provided in:
+  - GUI Components: https://docs.oracle.com/javase/tutorial/uiswing/examples/components/index.html
+  - Resizing icon in JLabel: https://stackoverflow.com/questions/16343098/resize-a-picture-to-fit-a-jlabel/32885963#32885963
 
 ---
 # Instructions for Grader
 
 - You can generate the first required event related to adding Xs to a Y by clicking [View] in the main window then [Add]
 to add a new meal into the exiting meal plan, which also include adding various ingredients into the ingredient list. 
-After pressing [Add], window would pop up, please fill in the fields and the new meal would appear in the Meal Plan window.
+After pressing [Add], window would pop up, please fill in the fields and the new meal panel that has a green border
+would appear in the bottom of the Meal Plan window.
 - You can generate the second required event related to adding Xs to a Y by [Grocery List] in the main window then [Add] 
 at the bottom of the checklist. Once you finish typing the new Ingredient, press Enter so that it would
 appear in the grocery list. The newly added items would be in a different color and do not have a quantity because it 

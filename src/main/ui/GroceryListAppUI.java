@@ -14,6 +14,8 @@ import java.awt.event.WindowEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+// Represents an application that runs the graphical user interface
+
 public class GroceryListAppUI extends JFrame implements ActionListener {
 
     public static final String JSON_STORE = "./data/MealPlan.json";
@@ -30,23 +32,15 @@ public class GroceryListAppUI extends JFrame implements ActionListener {
 
     // EFFECTS: constructs a new window
     public GroceryListAppUI() {
-
-        loadMealPlanPrompt();
-
         frameSetUp();
-
         mainPanel = createMainPanel();
-        setUpMainScreen();
+        setUpHeaders();
+        setUpButtons();
         add(mainPanel);
-
-        addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                saveMealPlanPrompt();
-            }
-        });
     }
 
+    // MODIFIES: this
+    // EFFECTS: set up the layout and create white space between content and window borders
     private JPanel createMainPanel() {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new GridLayout(0, 2, 10, 10));
@@ -55,21 +49,29 @@ public class GroceryListAppUI extends JFrame implements ActionListener {
         return mainPanel;
     }
 
+    // MODIFIES: this
+    // EFFECTS: set up the frame; set up prompt for when window is opened and closed
     private void frameSetUp() {
+        loadMealPlanPrompt();
+
         setTitle("Grocery List App");
         setSize(FRAME_WIDTH, FRAME_HEIGHT);
         setResizable(true);
-        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setBackground(FRAME_BACKGROUND_COLOR);
         setVisible(true);
 
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                saveMealPlanPrompt();
+            }
+        });
+
     }
 
-    private void setUpMainScreen() {
-        setUpHeaders();
-        setUpButtons();
-    }
-
+    // MODIFIES: mainPanel
+    // EFFECTS: create headers for the left side of the frame and add them to mainPanel
     private void setUpHeaders() {
         JPanel greetingPanel = new JPanel();
         greetingPanel.setLayout(new GridLayout(3, 1, 5, 5));
@@ -95,6 +97,8 @@ public class GroceryListAppUI extends JFrame implements ActionListener {
         mainPanel.add(greetingPanel);
     }
 
+    // MODIFIES: mainPanel
+    // EFFECTS: create a panel for buttons and add them to mainPanel
     private void setUpButtons() {
         JPanel buttonPane = new JPanel();
         buttonPane.setLayout(new GridLayout(4, 1, 20, 20));
@@ -120,6 +124,7 @@ public class GroceryListAppUI extends JFrame implements ActionListener {
         mainPanel.add(buttonPane);
     }
 
+    // EFFECTS: create buttons; set their command and listener
     private JButton drawButton(String text) {
         JButton newButton = new JButton(text);
         newButton.setActionCommand(text);
@@ -132,6 +137,7 @@ public class GroceryListAppUI extends JFrame implements ActionListener {
         return newButton;
     }
 
+    // EFFECTS: set actions for buttons when clicked
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
@@ -149,10 +155,12 @@ public class GroceryListAppUI extends JFrame implements ActionListener {
         }
     }
 
+    // EFFECTS: update the Total Cooking Time button to reflect changes in meal plan
     private void updateTotalTime(JButton button) {
         button.setText("Total Cooking Time: " + mp.getTotalCookingTime() + " min");
     }
 
+    // EFFECTS: display a confirmation dialog; asks user if they want to save current meal plan
     private void saveMealPlanPrompt() {
         JsonWriter jsonWriter = new JsonWriter(JSON_STORE);
         int n = JOptionPane.showConfirmDialog(this,
@@ -174,6 +182,7 @@ public class GroceryListAppUI extends JFrame implements ActionListener {
         }
     }
 
+    // EFFECTS: create a popup message dialog
     private void popUpMessage(String text, String titleOfPopUp, String type) {
 
         switch (type) {
@@ -188,6 +197,7 @@ public class GroceryListAppUI extends JFrame implements ActionListener {
         }
     }
 
+    // EFFECTS: display a confirmation dialog; asks user if they want to load saved meal plan
     private void loadMealPlanPrompt() {
         JsonReader jsonReader = new JsonReader(JSON_STORE);
 
@@ -208,6 +218,7 @@ public class GroceryListAppUI extends JFrame implements ActionListener {
         }
     }
 
+    // EFFECTS: run the application
     public static void main(String[] args) {
         new GroceryListAppUI();
     }
