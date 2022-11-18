@@ -3,9 +3,10 @@
           "Bagel and Creamcheese",
           "Fruit Salad",
           "Oatmeal Pancake",
-          "Yogurt"
+          "Yogurt",
+          "Gimbap"
      ],
-     "Number of Meals": 4,
+     "Number of Meals": 5,
      "Grocery List": [
           "Creamcheese",
           "Bagel",
@@ -19,9 +20,15 @@
           "Strawberries",
           "Granola",
           "Greek Yogurt",
-          "Blueberries"
+          "Blueberries",
+          "Rice",
+          "Seaweed",
+          "Spinach",
+          "Eggs",
+          "Carrot",
+          "Grounded Beef"
      ],
-     "Total Cooking Time": 40,
+     "Total Cooking Time": 70,
      "Meals": [
           {
                "Cooking Time": 5,
@@ -59,6 +66,18 @@
                     "Blueberries"
                ],
                "Name": "Yogurt"
+          },
+          {
+               "Cooking Time": 30,
+               "Ingredients Needed": [
+                    "Rice",
+                    "Seaweed",
+                    "Spinach",
+                    "Eggs",
+                    "Carrot",
+                    "Grounded Beef"
+               ],
+               "Name": "Gimbap"
           }
      ]
 }

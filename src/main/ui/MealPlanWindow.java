@@ -23,7 +23,7 @@ public class MealPlanWindow extends JFrame implements ActionListener {
     protected static final Color FRAME_BACKGROUND_COLOR = new Color(234, 222, 184);
     protected static final Color GREEN = new Color(160, 159, 87);
     protected static final Color ORANGE = new Color(197, 104, 36);
-    private static final Dimension FRAME_SIZE = new Dimension(800, 600);
+    private static final Dimension FRAME_SIZE = new Dimension(850,700);
     private static final Font TITLE_FONT = new Font("SANS-SERIF", Font.BOLD | Font.ITALIC, 20);
     private static final Font SUBTITLE_FONT = new Font("SANS-SERIF", Font.BOLD, 15);
     private static final Font TEXT_FONT = new Font("MONOSPACED", Font.PLAIN, 15);
@@ -35,8 +35,6 @@ public class MealPlanWindow extends JFrame implements ActionListener {
     private JPanel mealPanels;
     private JPanel inputPanel;
     private JPanel selectedPane;
-    private final JTextField name = new JTextField();
-    private final JTextField time = new JTextField();
 
     public MealPlanWindow(MealPlan mp) {
         this.mp = mp;
@@ -44,10 +42,10 @@ public class MealPlanWindow extends JFrame implements ActionListener {
         frameSetUp();
         setLayout(new BorderLayout());
 
-        JPanel mealPlanScreen = createMainPanel();
+        JPanel mealPlanScreen = initializeMainPanel();
         add(mealPlanScreen);
 
-        initializeMeals();
+        initializeMealsPanel();
         initializeButtons();
     }
 
@@ -83,13 +81,13 @@ public class MealPlanWindow extends JFrame implements ActionListener {
         return newButton;
     }
 
-    private void initializeMeals() {
+    private void initializeMealsPanel() {
         mealPanels = new JPanel(new GridLayout(0, 1, 10, 10));
         mealPanels.setBorder(BorderFactory.createEmptyBorder(25, 25, 25, 25));
 
         List<Meal> meals = mp.getMeals();
         for (Meal m : meals) {
-            JPanel meal = createMealPane(m);
+            JPanel meal = initializeIndividualMealPanel(m);
             meal.setBorder(BorderFactory.createCompoundBorder(
                     BorderFactory.createTitledBorder("Meal #" + (meals.indexOf(m) + 1)),
                     BorderFactory.createEmptyBorder(10, 10, 10, 10)));
@@ -112,7 +110,7 @@ public class MealPlanWindow extends JFrame implements ActionListener {
         add(mealsScrollPane, BorderLayout.CENTER);
     }
 
-    private JPanel createMealPane(Meal m) {
+    private JPanel initializeIndividualMealPanel(Meal m) {
         JPanel mealInfo = new JPanel();
         mealInfo.setLayout(new BorderLayout(20, 5));
 
@@ -123,9 +121,9 @@ public class MealPlanWindow extends JFrame implements ActionListener {
         mealName.setOpaque(true);
         mealName.setPreferredSize(new Dimension(FRAME_WIDTH / 3, FRAME_HEIGHT / 10));
 
-        JPanel cookingTime = createCookingTimePanel(m);
+        JPanel cookingTime = initializeTimePanel(m);
 
-        JPanel ingredients = createIngredientsPanel(m.getIngredients());
+        JPanel ingredients = initializeIngredientsPanel(m.getIngredients());
 
         mealInfo.add(mealName, BorderLayout.LINE_START);
         mealInfo.add(cookingTime, BorderLayout.AFTER_LINE_ENDS);
@@ -134,52 +132,51 @@ public class MealPlanWindow extends JFrame implements ActionListener {
         return mealInfo;
     }
 
-    private JPanel createCookingTimePanel(Meal m) {
-        JPanel cookingTime = new JPanel();
-        cookingTime.setLayout(new BorderLayout(5, 5));
-        JLabel cookingTimeTitle = new JLabel("Cooking Time: ");
-        cookingTimeTitle.setBorder(BorderFactory.createCompoundBorder(
+    private JPanel initializeTimePanel(Meal m) {
+        JPanel timePanel = new JPanel();
+        timePanel.setLayout(new BorderLayout(5, 5));
+        JLabel heading = new JLabel("Cooking Time: ");
+        heading.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createMatteBorder(0, 0, 2, 0, Color.BLACK),
                 BorderFactory.createEmptyBorder(10, 0, 10, 20)));
-        cookingTimeTitle.setFont(SUBTITLE_FONT);
+        heading.setFont(SUBTITLE_FONT);
 
-        JLabel cookingTimeMin = new JLabel("   " + m.getCookingTime() + " min");
-        cookingTimeMin.setFont(TEXT_FONT);
-        cookingTime.add(cookingTimeTitle, BorderLayout.PAGE_START);
-        cookingTime.add(cookingTimeMin, BorderLayout.CENTER);
+        JLabel description = new JLabel("   " + m.getCookingTime() + " min");
+        description.setFont(TEXT_FONT);
+        timePanel.add(heading, BorderLayout.PAGE_START);
+        timePanel.add(description, BorderLayout.CENTER);
 
-        return cookingTime;
+        return timePanel;
     }
 
 
-    private JPanel createIngredientsPanel(List<String> ingredients) {
+    private JPanel initializeIngredientsPanel(List<String> ingredients) {
         JPanel ingredientsPanel = new JPanel();
         ingredientsPanel.setLayout(new BorderLayout(5, 5));
 
-        JPanel ingredientPane = new JPanel();
-        ingredientPane.setLayout(new GridLayout(0, 2, 5, 5));
+        JPanel description = new JPanel();
+        description.setLayout(new GridLayout(0, 2, 5, 5));
 
-        JLabel subtitle = new JLabel("Ingredients: ");
-        subtitle.setFont(SUBTITLE_FONT);
-        subtitle.setBorder(BorderFactory.createCompoundBorder(
+        JLabel heading = new JLabel("Ingredients: ");
+        heading.setFont(SUBTITLE_FONT);
+        heading.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createMatteBorder(0, 0, 2, 0, Color.BLACK),
                 BorderFactory.createEmptyBorder(10, 0, 10, 20)));
-        ingredientsPanel.add(subtitle, BorderLayout.PAGE_START);
+        ingredientsPanel.add(heading, BorderLayout.PAGE_START);
 
         for (String i : ingredients) {
             JLabel ingredientLabel = new JLabel("• " + i);
             ingredientLabel.setFont(TEXT_FONT);
-            ingredientPane.add(ingredientLabel);
+            description.add(ingredientLabel);
         }
 
-        ingredientsPanel.add(ingredientPane);
+        ingredientsPanel.add(description);
 
         return ingredientsPanel;
-
     }
 
 
-    private JPanel createMainPanel() {
+    private JPanel initializeMainPanel() {
         JPanel mainPanel = new JPanel();
         mainPanel.setBorder(BorderFactory.createEmptyBorder(50, 50, 40, 50));
 
@@ -202,16 +199,20 @@ public class MealPlanWindow extends JFrame implements ActionListener {
             case "Save":
                 saveMeals();
                 break;
+
             case "Add":
                 addNewMeal(mp);
+                revalidate();
                 break;
+
             case "Delete":
                 deleteMeal(mp);
-                break;
-            case "Refresh":
-                new MealPlanWindow(mp);
                 deleteMealButton.setBackground(GREEN);
-                dispose();
+                revalidate();
+                break;
+
+            case "Refresh":
+                updateMealPlanWindow();
                 break;
         }
 
@@ -220,7 +221,6 @@ public class MealPlanWindow extends JFrame implements ActionListener {
     private void deleteMeal(MealPlan mp) throws NullPointerException {
         try {
             mealPanels.remove(selectedPane);
-
             JLabel selectedLabel = (JLabel) selectedPane.getComponent(0);
             String mealName = selectedLabel.getText();
             List<String> mealNames = mp.getNamesOfCurrentMeals();
@@ -228,10 +228,6 @@ public class MealPlanWindow extends JFrame implements ActionListener {
             int index = mealNames.indexOf(mealName);
             Meal meal = meals.get(index);
             mp.removeExistingMeal(meal);
-
-            new MealPlanWindow(mp);
-            deleteMealButton.setBackground(GREEN);
-            dispose();
 
         } catch (NullPointerException npe) {
             JOptionPane.showMessageDialog(null,
@@ -242,16 +238,16 @@ public class MealPlanWindow extends JFrame implements ActionListener {
 
     private void addNewMeal(MealPlan mp) throws IllegalArgumentException {
         try {
-            Map<String, List<String>> response = addMealDialog();
-            String name = String.valueOf(response.get("name").get(0));
-            int time = Integer.parseInt(response.get("time").get(0));
-            List<String> ingredientsNeeded = response.get("ingredients");
+            Map<String, String> nameAndTime = getNameAndTimeDialog();
+            String name = nameAndTime.get("name");
+            int time = Integer.parseInt(nameAndTime.get("time"));
+            List<String> ingredientsNeeded = getIngredientsDialog();
+            Meal newMeal = new Meal(name, ingredientsNeeded, time);
+            mp.addNewMeal(newMeal);
+            JPanel newMealPanel = initializeIndividualMealPanel(newMeal);
+            newMealPanel.setBorder(HIGHLIGHTED_BORDER);
+            mealPanels.add(newMealPanel);
 
-            mp.addNewMeal(new Meal(name, ingredientsNeeded, time));
-            updateMealPlanWindow();
-            revalidate();
-            repaint();
-            dispose();
         } catch (Exception e) {
             popUpMessage("Invalid Input, Please Try Again.", "Error", "error");
 
@@ -262,56 +258,55 @@ public class MealPlanWindow extends JFrame implements ActionListener {
     private void updateMealPlanWindow() {
         removeAll();
         new MealPlanWindow(mp);
+        validate();
+        dispose();
     }
 
-    private Map<String, List<String>> addMealDialog() {
-        int numberOfIngredients = getNumberOfIngredientsDialog();
+    private Map<String, String> getNameAndTimeDialog() {
+        Map<String,String> generalInfoMap = new HashMap<>();
         inputPanel = new JPanel(new GridLayout(0, 1, 5, 5));
 
-        initializeInputPanel();
+        inputPanel.add(new JLabel("Name: "));
+        JTextField name = new JTextField();
+        inputPanel.add(name);
+        inputPanel.add(new JLabel("Time To Cook: "));
+        JTextField time = new JTextField();
+        inputPanel.add(time);
+        JOptionPane.showConfirmDialog(this, inputPanel, "Add General Meal Info",
+                JOptionPane.OK_CANCEL_OPTION);
+        generalInfoMap.put("name", name.getText());
+        generalInfoMap.put("time", time.getText());
 
+        return generalInfoMap;
+    }
+
+    private List<String> getIngredientsDialog() {
+        JPanel inputPanel = new JPanel(new GridLayout(0,1,5,5));
+
+        int numberOfIngredients = getNumberOfIngredientsDialog();
         JTextField[] ingredientTextFields = new JTextField[numberOfIngredients];
-
         for (int i = 0; i < numberOfIngredients; i++) {
             ingredientTextFields[i] = new JTextField();
             inputPanel.add(new JLabel("Ingredient # " + (i + 1) + ": "));
             inputPanel.add(ingredientTextFields[i]);
         }
 
-        JOptionPane.showConfirmDialog(this, inputPanel, "Add Meal", JOptionPane.OK_CANCEL_OPTION);
+        JOptionPane.showConfirmDialog(this, inputPanel, "Add Ingredients",
+                JOptionPane.OK_CANCEL_OPTION);
 
-        Map<String, List<String>> mealMap = new HashMap<>();
-
-        List<String> nameList = new ArrayList<>();
-        nameList.add(name.getText());
-        List<String> timeList = new ArrayList<>();
-        timeList.add(time.getText());
         List<String> ingredients = new ArrayList<>();
         for (int i = 0; i < numberOfIngredients; i++) {
             ingredients.add(ingredientTextFields[i].getText());
         }
 
-        mealMap.put("name", nameList);
-        mealMap.put("time", timeList);
-        mealMap.put("ingredients", ingredients);
-
-        return mealMap;
+        return ingredients;
     }
-
-    private void initializeInputPanel() {
-        inputPanel.add(new JLabel("Name: "));
-        inputPanel.add(name);
-        inputPanel.add(new JLabel("Time To Cook: "));
-        inputPanel.add(time);
-    }
-
 
     private int getNumberOfIngredientsDialog() {
-        JTextField numberOfIngredients = new JTextField();
-
         JPanel labelAndText = new JPanel();
         labelAndText.setLayout(new GridLayout(0, 1, 5, 5));
         labelAndText.add(new JLabel("Number Of Ingredients For This Meal: "));
+        JTextField numberOfIngredients = new JTextField();
         labelAndText.add(numberOfIngredients);
 
         JOptionPane.showConfirmDialog(this, labelAndText,
@@ -322,10 +317,10 @@ public class MealPlanWindow extends JFrame implements ActionListener {
 
 
     private void saveMeals() {
-        saveMealPlanPrompt();
+        savePopUp();
     }
 
-    private void saveMealPlanPrompt() {
+    private void savePopUp() {
         JsonWriter jsonWriter = new JsonWriter(JSON_STORE);
         try {
             jsonWriter.open();
