@@ -59,6 +59,7 @@ public class GroceryListAppUI extends JFrame implements ActionListener {
         setResizable(true);
         setBackground(FRAME_BACKGROUND_COLOR);
         setVisible(true);
+        setLocationRelativeTo(null);
 
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {

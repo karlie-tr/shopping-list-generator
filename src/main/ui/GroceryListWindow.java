@@ -16,11 +16,13 @@ import static ui.GroceryListAppUI.FRAME_WIDTH;
 import static ui.MealPlanWindow.GREEN;
 import static ui.MealPlanWindow.ORANGE;
 
+// Represent a JFrame that contains the grocery list
 public class GroceryListWindow extends JFrame implements ActionListener {
     private static final Font TEXT_FONT = new Font("SANS_SERIF", Font.PLAIN, 12);
     private JPanel groceryPanel;
     private JButton addButton;
 
+    // EFFECTS: create a new JFrame that has grocery list
     public GroceryListWindow(MealPlan mp) {
         List<String> groceryList = mp.getGroceryList();
 
@@ -35,13 +37,16 @@ public class GroceryListWindow extends JFrame implements ActionListener {
         setVisible(true);
     }
 
+    // EFFECTS: set up the frame
     private void frameSetUp() {
         setTitle("To Buy List");
-        setSize(FRAME_WIDTH * 3 / 4, FRAME_HEIGHT);
+        setSize(FRAME_WIDTH, FRAME_HEIGHT);
         setResizable(true);
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        setLocationRelativeTo(null);
     }
 
+    // EFFECTS: create a panel that contains all items in grocery list and a title
     private JPanel createGroceryPanel(List<String> groceryList) {
         groceryPanel = new JPanel();
         groceryPanel.setLayout(new BorderLayout());
@@ -60,6 +65,7 @@ public class GroceryListWindow extends JFrame implements ActionListener {
         return groceryPanel;
     }
 
+    // EFFECTS: create a panel for each item in the grocery list
     private JPanel createNameAndQuantityCheckBox(List<String> toBuyList) {
         JPanel checkList = new JPanel();
         checkList.setLayout(new GridLayout(0, 1, 2, 2));
@@ -84,6 +90,7 @@ public class GroceryListWindow extends JFrame implements ActionListener {
 
     }
 
+    // EFFECTS: create the checkbox with the item name
     private JPanel createCheckBox(String text) {
         JPanel itemPanel = new JPanel();
         itemPanel.setLayout(new GridLayout(0, 1, 2, 2));
@@ -104,6 +111,8 @@ public class GroceryListWindow extends JFrame implements ActionListener {
         addIngredient();
     }
 
+    // EFFECTS: create a new panel where user can add to the grocery list;
+    // do not modify the grocery list of loaded Meal Plan
     private void addIngredient() {
         JPanel checkList = (JPanel) groceryPanel.getComponent(1);
         checkList.remove(addButton);

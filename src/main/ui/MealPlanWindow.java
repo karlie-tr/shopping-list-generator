@@ -205,6 +205,7 @@ public class MealPlanWindow extends JFrame implements ActionListener {
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setBackground(FRAME_BACKGROUND_COLOR);
         setVisible(true);
+        setLocationRelativeTo(null);
     }
 
     // EFFECTS: set actions for buttons

@@ -1,6 +1,6 @@
 {
      "Meals' Names": [
-          "Bagel and Creamcheese",
+          "Bagel and Cream cheese",
           "Fruit Salad",
           "Oatmeal Pancake",
           "Yogurt",
@@ -8,7 +8,7 @@
      ],
      "Number of Meals": 5,
      "Grocery List": [
-          "Creamcheese",
+          "Cream cheese",
           "Bagel",
           "Grapes",
           "Strawberries",
@@ -33,10 +33,10 @@
           {
                "Cooking Time": 5,
                "Ingredients Needed": [
-                    "Creamcheese",
+                    "Cream cheese",
                     "Bagel"
                ],
-               "Name": "Bagel and Creamcheese"
+               "Name": "Bagel and Cream cheese"
           },
           {
                "Cooking Time": 10,
