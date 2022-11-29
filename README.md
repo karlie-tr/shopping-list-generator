@@ -25,8 +25,8 @@ current meal plan
 - Implementation of GUI is modelled after examples provided in:
   - GUI Components: https://docs.oracle.com/javase/tutorial/uiswing/examples/components/index.html
   - Resizing icon in JLabel: https://stackoverflow.com/questions/16343098/resize-a-picture-to-fit-a-jlabel/32885963#32885963
-  - Event and EventLog classes are modelled from Alarm System application:
-    https://github.students.cs.ubc.ca/CPSC210/AlarmSystem
+- Implementation of Event and EventLog classes are modelled from Alarm System application:
+  https://github.students.cs.ubc.ca/CPSC210/AlarmSystem
 
 ---
 # Instructions for Grader
@@ -48,7 +48,8 @@ was launched OR [Load] in the main window
 ---
 # Phase 4: Task 2
 
-A representative sample of the events that occur when the program runs
+Below is a representative sample of the events that occur when the program runs 
+and a previously saved meal plan was loaded.
 
 ~~~
 Mon Nov 28 19:51:22 PST 2022
@@ -78,8 +79,9 @@ Added CONGEE to meal plan
 Mon Nov 28 19:51:22 PST 2022
 Added GREEN SALAD to meal plan
 
+// Changes make by user
 
-Mon Nov 28 19:51:38 PST 2022
+Mon Nov 28 19:51:38 PST 2022        
 Added A to meal plan
 
 
