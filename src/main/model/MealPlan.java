@@ -36,6 +36,8 @@ public class MealPlan implements Writable {
         totalCookingTime += m.getCookingTime();
         numberOfMeals++;
         toBuyList.addAll(ingredientsNeeded);
+
+        EventLog.getInstance().logEvent(new Event("Added " + m.getMealName().toUpperCase() + " to meal plan"));
     }
 
     // REQUIRES: mealPlan != empty; m is in mealPlan
@@ -51,6 +53,9 @@ public class MealPlan implements Writable {
         for (String ingredient : ingredientsNeeded) {
             toBuyList.remove(ingredient);
         }
+
+        EventLog.getInstance().logEvent(new Event("Removed " + m.getMealName().toUpperCase()
+                + " from meal plan."));
     }
 
     // getters
@@ -119,4 +124,10 @@ public class MealPlan implements Writable {
         return jsonMealList;
     }
 
+    public void printEventLog() {
+        EventLog el = EventLog.getInstance();
+        for (Event next : el) {
+            System.out.println(next + "\n\n");
+        }
+    }
 }

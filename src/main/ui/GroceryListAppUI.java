@@ -17,7 +17,6 @@ import java.io.IOException;
 // Represents an application that runs the graphical user interface
 
 public class GroceryListAppUI extends JFrame implements ActionListener {
-
     public static final String JSON_STORE = "./data/MealPlan.json";
     protected static final int FRAME_WIDTH = 800;
     protected static final int FRAME_HEIGHT = 600;
@@ -37,6 +36,11 @@ public class GroceryListAppUI extends JFrame implements ActionListener {
         setUpHeaders();
         setUpButtons();
         add(mainPanel);
+    }
+
+    // EFFECTS: run the application
+    public static void main(String[] args) {
+        new GroceryListAppUI();
     }
 
     // MODIFIES: this
@@ -66,10 +70,12 @@ public class GroceryListAppUI extends JFrame implements ActionListener {
             @Override
             public void windowClosing(WindowEvent e) {
                 saveMealPlanPrompt();
+                mp.printEventLog();
             }
         });
 
     }
+
 
     // MODIFIES: mainPanel
     // EFFECTS: create headers for the left side of the frame and add them to mainPanel
@@ -102,7 +108,7 @@ public class GroceryListAppUI extends JFrame implements ActionListener {
     // EFFECTS: create a panel for buttons and add them to mainPanel
     private void setUpButtons() {
         JPanel buttonPane = new JPanel();
-        buttonPane.setLayout(new GridLayout(4, 1, 20, 20));
+        buttonPane.setLayout(new GridLayout(4, 2, 20, 20));
         buttonPane.setPreferredSize(new Dimension(FRAME_WIDTH / 2, FRAME_HEIGHT / 2));
 
         JButton viewMealPlanButton = drawButton("View");
@@ -121,7 +127,7 @@ public class GroceryListAppUI extends JFrame implements ActionListener {
         buttonPane.add(viewTotalCookingTime);
         buttonPane.add(groceryListButton);
         buttonPane.add(loadButton);
-
+        
         mainPanel.add(buttonPane);
     }
 
@@ -189,11 +195,11 @@ public class GroceryListAppUI extends JFrame implements ActionListener {
         switch (type) {
             case "info":
                 JOptionPane.showMessageDialog(null,
-                        text, titleOfPopUp,JOptionPane.INFORMATION_MESSAGE);
+                        text, titleOfPopUp, JOptionPane.INFORMATION_MESSAGE);
                 break;
             case "error":
                 JOptionPane.showMessageDialog(null,
-                        text, titleOfPopUp,JOptionPane.ERROR_MESSAGE);
+                        text, titleOfPopUp, JOptionPane.ERROR_MESSAGE);
                 break;
         }
     }
@@ -219,10 +225,6 @@ public class GroceryListAppUI extends JFrame implements ActionListener {
         }
     }
 
-    // EFFECTS: run the application
-    public static void main(String[] args) {
-        new GroceryListAppUI();
-    }
 
 }
 

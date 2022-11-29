@@ -3,10 +3,13 @@
           "Bagel and Cream cheese",
           "Fruit Salad",
           "Oatmeal Pancake",
-          "Yogurt",
-          "Gimbap"
+          "Gimbap",
+          "Pasta",
+          "Congee",
+          "Green Salad",
+          "B"
      ],
-     "Number of Meals": 5,
+     "Number of Meals": 8,
      "Grocery List": [
           "Cream cheese",
           "Bagel",
@@ -18,17 +21,27 @@
           "Butter",
           "Banana",
           "Strawberries",
-          "Granola",
-          "Greek Yogurt",
-          "Blueberries",
           "Rice",
           "Seaweed",
           "Spinach",
           "Eggs",
           "Carrot",
-          "Grounded Beef"
+          "Grounded Beef",
+          "Pasta",
+          "Tomato sauce",
+          "Ground beef",
+          "Rice",
+          "Salted Eggs",
+          "Ground Pork",
+          "onion",
+          "lettuce",
+          "pumpkin seed",
+          "dressing",
+          "",
+          "",
+          ""
      ],
-     "Total Cooking Time": 70,
+     "Total Cooking Time": 170,
      "Meals": [
           {
                "Cooking Time": 5,
@@ -59,15 +72,6 @@
                "Name": "Oatmeal Pancake"
           },
           {
-               "Cooking Time": 5,
-               "Ingredients Needed": [
-                    "Granola",
-                    "Greek Yogurt",
-                    "Blueberries"
-               ],
-               "Name": "Yogurt"
-          },
-          {
                "Cooking Time": 30,
                "Ingredients Needed": [
                     "Rice",
@@ -78,6 +82,43 @@
                     "Grounded Beef"
                ],
                "Name": "Gimbap"
+          },
+          {
+               "Cooking Time": 30,
+               "Ingredients Needed": [
+                    "Pasta",
+                    "Tomato sauce",
+                    "Ground beef"
+               ],
+               "Name": "Pasta"
+          },
+          {
+               "Cooking Time": 45,
+               "Ingredients Needed": [
+                    "Rice",
+                    "Salted Eggs",
+                    "Ground Pork"
+               ],
+               "Name": "Congee"
+          },
+          {
+               "Cooking Time": 10,
+               "Ingredients Needed": [
+                    "onion",
+                    "lettuce",
+                    "pumpkin seed",
+                    "dressing"
+               ],
+               "Name": "Green Salad"
+          },
+          {
+               "Cooking Time": 20,
+               "Ingredients Needed": [
+                    "",
+                    "",
+                    ""
+               ],
+               "Name": "B"
           }
      ]
 }

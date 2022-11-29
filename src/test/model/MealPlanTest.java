@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class MealPlanTest {
     private final List<String> overnightOatIngredientList = new ArrayList<>();
@@ -37,6 +38,7 @@ public class MealPlanTest {
         oats = new Meal("overnight oats", overnightOatIngredientList, 10);
         chickenBowl = new Meal("chicken bowl", chickenBowlIngredientList, 20);
         bagel = new Meal("bagel and cream cheese", bagelAndCreamCheeseIngredientList, 5);
+
     }
 
     @Test
@@ -107,5 +109,25 @@ public class MealPlanTest {
         assertEquals(grocery3, mp3.getGroceryList());
 
         assertEquals(20, mp3.getTotalCookingTime());
+    }
+
+    @Test
+    public void testEventLog() {
+
+        MealPlan mp = new MealPlan();
+        Event e1 = new Event("Added overnight oats to meal plan");
+        Event e2 = new Event("Added chicken bowl to meal plan");
+        List<Event> eventList = new ArrayList<>();
+
+        mp.addNewMeal(oats);
+        mp.addNewMeal(chickenBowl);
+
+        EventLog el = EventLog.getInstance();
+        for (Event next : el) {
+            eventList.add(next);
+        }
+
+        assertTrue(eventList.contains(e1));
+        assertTrue(eventList.contains(e2));
     }
 }

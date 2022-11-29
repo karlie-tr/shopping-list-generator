@@ -24,7 +24,7 @@ public class MealPlanWindow extends JFrame implements ActionListener {
     protected static final Color FRAME_BACKGROUND_COLOR = new Color(234, 222, 184);
     protected static final Color GREEN = new Color(160, 159, 87);
     protected static final Color ORANGE = new Color(197, 104, 36);
-    private static final Dimension FRAME_SIZE = new Dimension(850,700);
+    private static final Dimension FRAME_SIZE = new Dimension(850, 700);
     private static final Font TITLE_FONT = new Font("SANS-SERIF", Font.BOLD | Font.ITALIC, 20);
     private static final Font SUBTITLE_FONT = new Font("SANS-SERIF", Font.BOLD, 15);
     private static final Font TEXT_FONT = new Font("MONOSPACED", Font.PLAIN, 15);
@@ -278,7 +278,7 @@ public class MealPlanWindow extends JFrame implements ActionListener {
 
     // EFFECTS: create a new dialog the asks user to input the meal's name and cooking time
     private Map<String, String> getNameAndTimeDialog() {
-        Map<String,String> generalInfoMap = new HashMap<>();
+        Map<String, String> generalInfoMap = new HashMap<>();
         JPanel inputPanel = new JPanel(new GridLayout(0, 1, 5, 5));
 
         inputPanel.add(new JLabel("Name: "));
@@ -297,7 +297,7 @@ public class MealPlanWindow extends JFrame implements ActionListener {
 
     // EFFECTS: create a new dialog the asks user to input the ingredients
     private List<String> getIngredientsDialog() {
-        JPanel inputPanel = new JPanel(new GridLayout(0,1,5,5));
+        JPanel inputPanel = new JPanel(new GridLayout(0, 1, 5, 5));
 
         int numberOfIngredients = getNumberOfIngredientsDialog();
         JTextField[] ingredientTextFields = new JTextField[numberOfIngredients];

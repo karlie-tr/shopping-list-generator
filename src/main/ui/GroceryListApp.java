@@ -15,10 +15,10 @@ public class GroceryListApp {
 
     public static final String JSON_STORE = "./data/MealPlan.json";
     private final Scanner input;
-    private MealPlan mp;
-    private boolean runProgram;
     private final JsonWriter jsonWriter;
     private final JsonReader jsonReader;
+    private MealPlan mp;
+    private boolean runProgram;
 
     public GroceryListApp() throws FileNotFoundException {
         input = new Scanner(System.in);
