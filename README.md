@@ -49,46 +49,53 @@ was launched OR [Load] in the main window
 # Phase 4: Task 2
 
 Below is a representative sample of the events that occur when the program runs 
-and a previously saved meal plan was loaded.
+and a previously saved meal plan was loaded and user adds and removes a meal.
 
 ~~~
-Mon Nov 28 19:51:22 PST 2022
-Added BAGEL AND CREAM CHEESE to meal plan
+Thu Dec 01 11:45:33 PST 2022
+Added [bagel and cream cheese] to meal plan
 
 
-Mon Nov 28 19:51:22 PST 2022
-Added FRUIT SALAD to meal plan
+Thu Dec 01 11:45:33 PST 2022
+Added [fruit salad] to meal plan
 
 
-Mon Nov 28 19:51:22 PST 2022
-Added OATMEAL PANCAKE to meal plan
+Thu Dec 01 11:45:33 PST 2022
+Added [oatmeal pancake] to meal plan
 
 
-Mon Nov 28 19:51:22 PST 2022
-Added GIMBAP to meal plan
+Thu Dec 01 11:45:33 PST 2022
+Added [pasta] to meal plan
 
 
-Mon Nov 28 19:51:22 PST 2022
-Added PASTA to meal plan
+Thu Dec 01 11:45:33 PST 2022
+Added [green salad] to meal plan
 
 
-Mon Nov 28 19:51:22 PST 2022
-Added CONGEE to meal plan
+Thu Dec 01 11:45:33 PST 2022
+Added [kimchi fried rice] to meal plan
 
 
-Mon Nov 28 19:51:22 PST 2022
-Added GREEN SALAD to meal plan
-
-// Changes make by user
-
-Mon Nov 28 19:51:38 PST 2022        
-Added A to meal plan
+Thu Dec 01 11:45:33 PST 2022
+Added [overnight oats] to meal plan
 
 
-Mon Nov 28 19:51:50 PST 2022
-Added B to meal plan
+Thu Dec 01 11:45:33 PST 2022
+Added [poke bowl] to meal plan
 
 
-Mon Nov 28 19:51:57 PST 2022
-Removed A from meal plan.
+Thu Dec 01 11:45:40 PST 2022
+Removed [bagel and cream cheese] from meal plan.
 ~~~
+
+There is no Event Log when user adds a new item to the grocery list because the newly added item does
+not belong to any meal plan, hence, it is not tracked by the EventLog.
+
+---
+# Phase 4: Task 3
+If you had more time to work on the project, is there any refactoring that you would do to improve your design?  
+If so, describe the changes you would make in point form in this section of your README.md file.  
+Note that we do not want you to actually perform the refactoring -- just identify the changes you would make if 
+you had more time.  Keep in mind that refactoring does not mean adding more features to your application.    
+
+If i had more time to work on the project, I would redesign the MealPlan class so that it would have a singleton pattern

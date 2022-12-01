@@ -36,7 +36,8 @@ public class MealPlan implements Writable {
         numberOfMeals++;
         toBuyList.addAll(ingredientsNeeded);
 
-        EventLog.getInstance().logEvent(new Event("Added " + m.getMealName().toUpperCase() + " to meal plan"));
+        EventLog.getInstance().logEvent(new Event("Added "
+                + "[" + m.getMealName().toLowerCase() + "]" + " to meal plan"));
     }
 
     // REQUIRES: mealPlan != empty; m is in mealPlan
@@ -53,8 +54,8 @@ public class MealPlan implements Writable {
             toBuyList.remove(ingredient);
         }
 
-        EventLog.getInstance().logEvent(new Event("Removed " + m.getMealName().toUpperCase()
-                + " from meal plan."));
+        EventLog.getInstance().logEvent(new Event("Removed [" + m.getMealName().toLowerCase()
+                + "] from meal plan."));
     }
 
     // getters

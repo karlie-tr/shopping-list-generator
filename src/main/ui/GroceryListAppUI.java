@@ -175,6 +175,7 @@ public class GroceryListAppUI extends JFrame implements ActionListener {
                 "Would you like to save your current meal plan?",
                 "Save Meal Plan?",
                 JOptionPane.YES_NO_OPTION);
+
         if (n == 0) {
             try {
                 jsonWriter.open();
@@ -192,7 +193,6 @@ public class GroceryListAppUI extends JFrame implements ActionListener {
 
     // EFFECTS: create a popup message dialog
     private void popUpMessage(String text, String titleOfPopUp, String type) {
-
         switch (type) {
             case "info":
                 JOptionPane.showMessageDialog(null,
@@ -208,11 +208,11 @@ public class GroceryListAppUI extends JFrame implements ActionListener {
     // EFFECTS: display a confirmation dialog; asks user if they want to load saved meal plan
     private void loadMealPlanPrompt() {
         JsonReader jsonReader = new JsonReader(JSON_STORE);
-
         int n = JOptionPane.showConfirmDialog(this,
                 "Would you like to load previously saved meal plan?",
                 "Load Meal Plan?",
                 JOptionPane.YES_NO_OPTION);
+
         if (n == 0) {
             try {
                 this.mp = jsonReader.read();

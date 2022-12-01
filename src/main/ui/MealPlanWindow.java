@@ -266,7 +266,6 @@ public class MealPlanWindow extends JFrame implements ActionListener {
 
         } catch (Exception e) {
             popUpMessage("Invalid Input, Please Try Again.", "Error", "error");
-
         }
 
     }

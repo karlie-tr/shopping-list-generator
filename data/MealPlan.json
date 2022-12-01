@@ -1,18 +1,15 @@
 {
      "Meals' Names": [
-          "Bagel and Cream cheese",
           "Fruit Salad",
           "Oatmeal Pancake",
-          "Gimbap",
           "Pasta",
-          "Congee",
           "Green Salad",
-          "B"
+          "Kimchi Fried Rice",
+          "Overnight oats",
+          "Poke bowl"
      ],
-     "Number of Meals": 8,
+     "Number of Meals": 7,
      "Grocery List": [
-          "Cream cheese",
-          "Bagel",
           "Grapes",
           "Strawberries",
           "Kiwi",
@@ -21,36 +18,30 @@
           "Butter",
           "Banana",
           "Strawberries",
-          "Rice",
-          "Seaweed",
-          "Spinach",
-          "Eggs",
-          "Carrot",
-          "Grounded Beef",
           "Pasta",
           "Tomato sauce",
           "Ground beef",
-          "Rice",
-          "Salted Eggs",
-          "Ground Pork",
           "onion",
           "lettuce",
           "pumpkin seed",
           "dressing",
-          "",
-          "",
-          ""
+          "Rice",
+          "Kimchi",
+          "Egg",
+          "Scallions",
+          "Mushroom",
+          "oats",
+          "milk",
+          "strawberries",
+          "blueberries",
+          "tuna",
+          "seaweed",
+          "rice",
+          "kale",
+          "tofu"
      ],
-     "Total Cooking Time": 170,
+     "Total Cooking Time": 95,
      "Meals": [
-          {
-               "Cooking Time": 5,
-               "Ingredients Needed": [
-                    "Cream cheese",
-                    "Bagel"
-               ],
-               "Name": "Bagel and Cream cheese"
-          },
           {
                "Cooking Time": 10,
                "Ingredients Needed": [
@@ -74,32 +65,11 @@
           {
                "Cooking Time": 30,
                "Ingredients Needed": [
-                    "Rice",
-                    "Seaweed",
-                    "Spinach",
-                    "Eggs",
-                    "Carrot",
-                    "Grounded Beef"
-               ],
-               "Name": "Gimbap"
-          },
-          {
-               "Cooking Time": 30,
-               "Ingredients Needed": [
                     "Pasta",
                     "Tomato sauce",
                     "Ground beef"
                ],
                "Name": "Pasta"
-          },
-          {
-               "Cooking Time": 45,
-               "Ingredients Needed": [
-                    "Rice",
-                    "Salted Eggs",
-                    "Ground Pork"
-               ],
-               "Name": "Congee"
           },
           {
                "Cooking Time": 10,
@@ -112,13 +82,36 @@
                "Name": "Green Salad"
           },
           {
-               "Cooking Time": 20,
+               "Cooking Time": 5,
                "Ingredients Needed": [
-                    "",
-                    "",
-                    ""
+                    "Rice",
+                    "Kimchi",
+                    "Egg",
+                    "Scallions",
+                    "Mushroom"
                ],
-               "Name": "B"
+               "Name": "Kimchi Fried Rice"
+          },
+          {
+               "Cooking Time": 10,
+               "Ingredients Needed": [
+                    "oats",
+                    "milk",
+                    "strawberries",
+                    "blueberries"
+               ],
+               "Name": "Overnight oats"
+          },
+          {
+               "Cooking Time": 10,
+               "Ingredients Needed": [
+                    "tuna",
+                    "seaweed",
+                    "rice",
+                    "kale",
+                    "tofu"
+               ],
+               "Name": "Poke bowl"
           }
      ]
 }
