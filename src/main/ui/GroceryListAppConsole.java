@@ -11,21 +11,14 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
 
-public class GroceryListApp {
-
+public class GroceryListAppConsole {
     public static final String JSON_STORE = "./data/MealPlan.json";
-    private final Scanner input;
-    private final JsonWriter jsonWriter;
-    private final JsonReader jsonReader;
     private MealPlan mp;
     private boolean runProgram;
 
-    public GroceryListApp() throws FileNotFoundException {
-        input = new Scanner(System.in);
+    public GroceryListAppConsole() throws FileNotFoundException {
         runProgram = true;
         mp = new MealPlan();
-        jsonWriter = new JsonWriter(JSON_STORE);
-        jsonReader = new JsonReader(JSON_STORE);
 
         runGroceryListApp();
     }
@@ -35,6 +28,8 @@ public class GroceryListApp {
         System.out.println("Hello, please select from the options listed below :).");
         printMainOptions();
         String str;
+
+        Scanner input = new Scanner(System.in);
 
         while (runProgram) {
             if (input.hasNext()) {
@@ -129,6 +124,7 @@ public class GroceryListApp {
     // EFFECTS: load a previously saved meal plan from file
     private void loadMealPlan() {
         try {
+            JsonReader jsonReader = new JsonReader(JSON_STORE);
             mp = jsonReader.read();
             System.out.println("Loaded meal plan from " + JSON_STORE);
         } catch (IOException e) {
@@ -139,6 +135,7 @@ public class GroceryListApp {
     // EFFECTS: save current Meal Plan to file
     private void saveMealPlan() {
         try {
+            JsonWriter jsonWriter = new JsonWriter(JSON_STORE);
             jsonWriter.open();
             jsonWriter.write(mp);
             jsonWriter.close();
@@ -252,6 +249,15 @@ public class GroceryListApp {
             }
         } else {
             printNoMealPlan();
+        }
+    }
+
+    // EFFECTS: Run App
+    public static void main(String[] args) {
+        try {
+            new GroceryListAppConsole();
+        } catch (FileNotFoundException e) {
+            System.out.println("File Not Found. Please Try Again");
         }
     }
 }

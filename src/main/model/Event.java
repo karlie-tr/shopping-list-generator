@@ -6,6 +6,7 @@ import java.util.Date;
 
 /**
  * Represents a meal plan event.
+ * Modelled from Alarm System
  */
 public class Event {
     private static final int HASH_CONSTANT = 13;

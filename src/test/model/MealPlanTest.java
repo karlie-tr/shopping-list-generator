@@ -4,6 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -115,8 +117,9 @@ public class MealPlanTest {
     public void testEventLog() {
 
         MealPlan mp = new MealPlan();
-        Event e1 = new Event("Added overnight oats to meal plan");
-        Event e2 = new Event("Added chicken bowl to meal plan");
+        Event e1 = new Event("Added OVERNIGHT OATS to meal plan");
+        Event e2 = new Event("Added CHICKEN BOWL to meal plan");
+
         List<Event> eventList = new ArrayList<>();
 
         mp.addNewMeal(oats);
@@ -130,4 +133,14 @@ public class MealPlanTest {
         assertTrue(eventList.contains(e1));
         assertTrue(eventList.contains(e2));
     }
+
+    @Test
+    public void testEvent() {
+        Event e = new Event("Added OVERNIGHT OATS to meal plan");
+        Date d = Calendar.getInstance().getTime();
+        assertEquals("Added OVERNIGHT OATS to meal plan", e.getDescription());
+        assertEquals(d, e.getDate());
+        assertEquals(d + "\n" + "Added OVERNIGHT OATS to meal plan", e.toString());
+    }
+
 }

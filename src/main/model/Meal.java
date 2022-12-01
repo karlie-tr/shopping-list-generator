@@ -10,7 +10,6 @@ import java.util.List;
 // and cooking time
 
 public class Meal implements Writable {
-
     private final String mealName;                       // the name of the meal
     private final List<String> ingredientsNeeded;        // a list of ingredients required for the meal
     private final int time;                              // the time required to cook the meal (in minutes)

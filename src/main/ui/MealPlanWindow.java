@@ -17,7 +17,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static ui.GroceryListAppUI.*;
+import static ui.GroceryListAppUI.FRAME_HEIGHT;
+import static ui.GroceryListAppUI.FRAME_WIDTH;
 
 // Represent a frame that contains the information related to the meal plan
 public class MealPlanWindow extends JFrame implements ActionListener {
@@ -31,10 +32,11 @@ public class MealPlanWindow extends JFrame implements ActionListener {
     private static final Border HIGHLIGHTED_BORDER = BorderFactory.createCompoundBorder(
             BorderFactory.createLineBorder(GREEN, 5),
             BorderFactory.createEmptyBorder(10, 10, 10, 10));
-    private final MealPlan mp;
+    private static final String JSON_STORE = "data/MealPlan.json";
     private JButton deleteMealButton;
     private JPanel mealsPanel;
     private JPanel selectedPane;
+    private final MealPlan mp;
 
     // EFFECTS: set up the meal plan window and meal plan
     public MealPlanWindow(MealPlan mp) {
@@ -56,9 +58,9 @@ public class MealPlanWindow extends JFrame implements ActionListener {
         JPanel buttons = new JPanel();
         buttons.setLayout(new GridLayout(0, 3, 20, 20));
 
-        JButton addMealButton = drawButton("Add", "data/layer-plus.png");
-        JButton saveMealPlanButton = drawButton("Save", "data/disk.png");
-        deleteMealButton = drawButton("Delete", "data/layer-minus.png");
+        JButton addMealButton = drawButtonWithIcon("Add", "data/layer-plus.png");
+        JButton saveMealPlanButton = drawButtonWithIcon("Save", "data/disk.png");
+        deleteMealButton = drawButtonWithIcon("Delete", "data/layer-minus.png");
 
         buttons.add(addMealButton);
         buttons.add(saveMealPlanButton);
@@ -69,7 +71,7 @@ public class MealPlanWindow extends JFrame implements ActionListener {
     }
 
     // EFFECTS: create buttons and set their action listener and action command
-    private JButton drawButton(String text, String iconPath) {
+    private JButton drawButtonWithIcon(String text, String iconPath) {
         ImageIcon buttonIcon = new ImageIcon(iconPath);
         ImageIcon scaledIcon = new ImageIcon(buttonIcon.getImage().getScaledInstance(30,
                 30, Image.SCALE_DEFAULT));
@@ -188,7 +190,7 @@ public class MealPlanWindow extends JFrame implements ActionListener {
 
 
     // MODIFIES: this
-    // EFFECTS: Set up the layout of main panel
+    // EFFECTS: Set up the layout of meal panel
     private JPanel initializeMainPanel() {
         JPanel mainPanel = new JPanel();
         mainPanel.setBorder(BorderFactory.createEmptyBorder(50, 50, 40, 50));
@@ -198,7 +200,7 @@ public class MealPlanWindow extends JFrame implements ActionListener {
 
     // MODIFIES: this
     // EFFECTS: set up the frame
-    private void frameSetUp() {
+    protected void frameSetUp() {
         setTitle("Meal Plan");
         setSize(FRAME_SIZE);
         setResizable(true);
@@ -213,7 +215,7 @@ public class MealPlanWindow extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "Save":
-                savePopUp();
+                saveMealPlan();
                 break;
 
             case "Add":
@@ -272,7 +274,7 @@ public class MealPlanWindow extends JFrame implements ActionListener {
     // MODIFIES: this
     // EFFECTS: create a new updated MealPlanWindow
     private void updateMealPlanWindow() {
-        new MealPlanWindow(mp);
+        new MealPlanWindow(this.mp);
         dispose();
     }
 
@@ -332,10 +334,9 @@ public class MealPlanWindow extends JFrame implements ActionListener {
         return Integer.parseInt(numberOfIngredients.getText());
     }
 
-    // EFFECTS: create a save confirmation dialog;
-    //          If user choose yes, save current mp to file;
-    //          Otherwise, close the application
-    private void savePopUp() {
+    // EFFECTS: Save the current meal plan to file. Display a success message if file saved;
+    //          otherwise, display an error message
+    private void saveMealPlan() {
         JsonWriter jsonWriter = new JsonWriter(JSON_STORE);
         try {
             jsonWriter.open();
@@ -349,7 +350,6 @@ public class MealPlanWindow extends JFrame implements ActionListener {
 
     // EFFECTS: create a message
     private void popUpMessage(String text, String titleOfPopUp, String type) {
-
         switch (type) {
             case "info":
                 JOptionPane.showMessageDialog(null,

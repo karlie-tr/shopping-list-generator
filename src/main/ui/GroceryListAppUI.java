@@ -14,19 +14,20 @@ import java.awt.event.WindowEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import static ui.GroceryListAppConsole.JSON_STORE;
+
 // Represents an application that runs the graphical user interface
 
 public class GroceryListAppUI extends JFrame implements ActionListener {
-    public static final String JSON_STORE = "./data/MealPlan.json";
     protected static final int FRAME_WIDTH = 800;
     protected static final int FRAME_HEIGHT = 600;
     protected static final Font BUTTON_FONT = new Font("SANS_SERIF", Font.BOLD | Font.ITALIC, 20);
     protected static final Color BUTTON_BACKGROUND_COLOR = new Color(197, 104, 36);
     protected static final Color FRAME_BACKGROUND_COLOR = new Color(234, 222, 184);
     protected static final LineBorder BUTTON_BORDER = new LineBorder(Color.BLACK, 2, true);
-    JPanel mainPanel;
-    private MealPlan mp;
+    private final JPanel mainPanel;
     private JButton viewTotalCookingTime;
+    protected MealPlan mp;
 
 
     // EFFECTS: constructs a new window
@@ -55,7 +56,7 @@ public class GroceryListAppUI extends JFrame implements ActionListener {
 
     // MODIFIES: this
     // EFFECTS: set up the frame; set up prompt for when window is opened and closed
-    private void frameSetUp() {
+    protected void frameSetUp() {
         loadMealPlanPrompt();
 
         setTitle("Grocery List App");
@@ -106,7 +107,7 @@ public class GroceryListAppUI extends JFrame implements ActionListener {
 
     // MODIFIES: mainPanel
     // EFFECTS: create a panel for buttons and add them to mainPanel
-    private void setUpButtons() {
+    protected void setUpButtons() {
         JPanel buttonPane = new JPanel();
         buttonPane.setLayout(new GridLayout(4, 2, 20, 20));
         buttonPane.setPreferredSize(new Dimension(FRAME_WIDTH / 2, FRAME_HEIGHT / 2));
@@ -214,14 +215,14 @@ public class GroceryListAppUI extends JFrame implements ActionListener {
                 JOptionPane.YES_NO_OPTION);
         if (n == 0) {
             try {
-                mp = jsonReader.read();
+                this.mp = jsonReader.read();
                 popUpMessage("File Loaded Successfully!", "Yay!", "info");
             } catch (IOException e) {
                 popUpMessage("No Saved File Founded :(", "Error", "error");
                 new MealPlan();
             }
         } else {
-            mp = new MealPlan();
+            this.mp = new MealPlan();
         }
     }
 

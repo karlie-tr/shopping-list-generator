@@ -3,13 +3,11 @@ package persistence;
 import model.MealPlan;
 import org.json.JSONObject;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
 // Represents a writer that writes JSON representation of meal plan to file
 public class JsonWriter {
-
     private static final int TAB = 5;
     private final String destination;
     private PrintWriter writer;

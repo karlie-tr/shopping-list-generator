@@ -11,7 +11,6 @@ import java.util.List;
 // names and a grocery list
 
 public class MealPlan implements Writable {
-
     private final List<Meal> meals;                // the meals in the meal plan
     private final List<String> mealsNames;         // Names of all meals in meal plan
     private final List<String> toBuyList;          // The grocery list of all the items
@@ -124,6 +123,7 @@ public class MealPlan implements Writable {
         return jsonMealList;
     }
 
+    // EFFECTS: print out the events that happened to the meal plan
     public void printEventLog() {
         EventLog el = EventLog.getInstance();
         for (Event next : el) {
