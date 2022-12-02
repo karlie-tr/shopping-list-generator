@@ -92,10 +92,14 @@ There is no Event Log when user adds a new item to the grocery list because the 
 not belong to any meal plan, hence, it is not tracked by the EventLog.
 
 ---
-# Phase 4: Task 3
-If you had more time to work on the project, is there any refactoring that you would do to improve your design?  
-If so, describe the changes you would make in point form in this section of your README.md file.  
-Note that we do not want you to actually perform the refactoring -- just identify the changes you would make if 
-you had more time.  Keep in mind that refactoring does not mean adding more features to your application.    
+# Phase 4: Task 3  
 
-If i had more time to work on the project, I would redesign the MealPlan class so that it would have a singleton pattern
+If I had more time to work on the project, I would:
+- create an abstract class for setting up the JFrame for GroceryListAppUI, GroceryListWindow, and MealPlanWindow 
+to reduce coupling since these classes shared some similar methods such as frameSetUp() and buttonSetUp().
+- create a new class that contains all styling (colors, icon, text font) for easy adjustment of the visual elements in the UI.
+- create a method setJLabelAesthetics(List<JLabel> l, Font f, Color c, Color c) that set the font, the background, the foreground of JLabels 
+to improve coupling.
+- redesign MealPlan with a singleton design pattern so that there could only be 1 MealPlan that exists in the application and
+other classes could have access to that MealPlan.
+- create a new method persistenceFunction() that perform the saving and loading functions depends on the parameter to reduce duplicate code.
