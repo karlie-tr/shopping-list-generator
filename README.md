@@ -85,7 +85,7 @@ Added [poke bowl] to meal plan
 
 
 Thu Dec 01 11:45:40 PST 2022
-Removed [bagel and cream cheese] from meal plan.
+Removed [bagel and cream cheese] from meal plan
 ~~~
 
 There is no Event Log when user adds a new item to the grocery list because the newly added item does
@@ -101,5 +101,10 @@ to reduce coupling since these classes shared some similar methods such as frame
 - create a method setJLabelAesthetics(List<JLabel> l, Font f, Color c, Color c) that set the font, the background, the foreground of JLabels 
 to improve coupling.
 - redesign MealPlan with a singleton design pattern so that there could only be 1 MealPlan that exists in the application and
-other classes could have access to that MealPlan.
+other classes (GroceryListWindow and MealPlanWindow) could have access to that MealPlan. This would reduce the dependencies between these classes
+and GroceryListAppUI since currently, they are dependent on the MealPlan defined in GroceryListAppUI to grant access to MealPlan. 
+- create an abstract class called Window that would provide the functionality of all the UI windows. This would reduce duplicate code 
+and reduce coupling.
 - create a new method persistenceFunction() that perform the saving and loading functions depends on the parameter to reduce duplicate code.
+- add a method for printing event log to improve coupling (reduce the changes need to make in order to maintain the overall
+format of event log)

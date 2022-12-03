@@ -15,6 +15,8 @@ public class GroceryListAppConsole {
     public static final String JSON_STORE = "./data/MealPlan.json";
     private MealPlan mp;
     private boolean runProgram;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     public GroceryListAppConsole() throws FileNotFoundException {
         runProgram = true;
@@ -124,7 +126,7 @@ public class GroceryListAppConsole {
     // EFFECTS: load a previously saved meal plan from file
     private void loadMealPlan() {
         try {
-            JsonReader jsonReader = new JsonReader(JSON_STORE);
+            jsonReader = new JsonReader(JSON_STORE);
             mp = jsonReader.read();
             System.out.println("Loaded meal plan from " + JSON_STORE);
         } catch (IOException e) {
@@ -135,7 +137,7 @@ public class GroceryListAppConsole {
     // EFFECTS: save current Meal Plan to file
     private void saveMealPlan() {
         try {
-            JsonWriter jsonWriter = new JsonWriter(JSON_STORE);
+            jsonWriter = new JsonWriter(JSON_STORE);
             jsonWriter.open();
             jsonWriter.write(mp);
             jsonWriter.close();

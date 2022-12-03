@@ -28,6 +28,8 @@ public class GroceryListAppUI extends JFrame implements ActionListener {
     private final JPanel mainPanel;
     private JButton viewTotalCookingTime;
     protected MealPlan mp;
+    private JsonReader jsonReader;
+    private JsonWriter jsonWriter;
 
 
     // EFFECTS: constructs a new window
@@ -170,7 +172,7 @@ public class GroceryListAppUI extends JFrame implements ActionListener {
 
     // EFFECTS: display a confirmation dialog; asks user if they want to save current meal plan
     private void saveMealPlanPrompt() {
-        JsonWriter jsonWriter = new JsonWriter(JSON_STORE);
+        jsonWriter = new JsonWriter(JSON_STORE);
         int n = JOptionPane.showConfirmDialog(this,
                 "Would you like to save your current meal plan?",
                 "Save Meal Plan?",
@@ -207,7 +209,7 @@ public class GroceryListAppUI extends JFrame implements ActionListener {
 
     // EFFECTS: display a confirmation dialog; asks user if they want to load saved meal plan
     private void loadMealPlanPrompt() {
-        JsonReader jsonReader = new JsonReader(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         int n = JOptionPane.showConfirmDialog(this,
                 "Would you like to load previously saved meal plan?",
                 "Load Meal Plan?",

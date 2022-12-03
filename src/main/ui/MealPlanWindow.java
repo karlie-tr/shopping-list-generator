@@ -37,6 +37,7 @@ public class MealPlanWindow extends JFrame implements ActionListener {
     private JPanel mealsPanel;
     private JPanel selectedPane;
     private final MealPlan mp;
+    private JsonWriter jsonWriter;
 
     // EFFECTS: set up the meal plan window and meal plan
     public MealPlanWindow(MealPlan mp) {
@@ -336,7 +337,7 @@ public class MealPlanWindow extends JFrame implements ActionListener {
     // EFFECTS: Save the current meal plan to file. Display a success message if file saved;
     //          otherwise, display an error message
     private void saveMealPlan() {
-        JsonWriter jsonWriter = new JsonWriter(JSON_STORE);
+        jsonWriter = new JsonWriter(JSON_STORE);
         try {
             jsonWriter.open();
             jsonWriter.write(mp);
