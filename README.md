@@ -11,6 +11,13 @@ current meal plan
 - As a user, I want to *save the current meal plan*
 - As a user, I want to *load the previously saved meal plan*
 
+## GUI
+<img width="562" alt="image" src="https://user-images.githubusercontent.com/99240209/220048746-6b733ed8-9f05-4f2e-8b2c-723898009f73.png">
+<img width="562" alt="image" src="https://user-images.githubusercontent.com/99240209/220049233-0a28f7be-fc4d-4d4b-b77a-055e48ebb149.png">
+<img width="562" alt="image" src="https://user-images.githubusercontent.com/99240209/220049088-70bd6941-9a84-4514-9e63-05c1ca3372f5.png">
+
+
+
 ## Reference
 - Implementation of JSONReader and JSONWriter is modelled after [JSONSerializationDemo by UBC]
 (https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo)
