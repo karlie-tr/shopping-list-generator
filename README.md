@@ -1,4 +1,4 @@
-# TERM PROJECT: Shopping List Application
+Shopping List Application
 
 ## Project Proposal
 
