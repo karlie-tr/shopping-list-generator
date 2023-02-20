@@ -1,7 +1,4 @@
 # Shopping List Application
-
-## Summary
-
 The goal of this application is to *<mark style="background-color: #e4d5eb">generate a grocery list to aid in the 
 process of meal prepping and planning </mark>* based on the recipes that were added by the users. 
 
